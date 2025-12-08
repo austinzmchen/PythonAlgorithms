@@ -1,3 +1,9 @@
+# Statement
+#
+# Given an array of integers nums, and an integer k, 
+#   return the maximum sum of a contiguous subarray of length k.
+
+
 import sys
 
 def max_sub_array_of_size_k(k, arr):
@@ -14,13 +20,15 @@ def max_sub_array_of_size_k(k, arr):
 
 def max_sub_array_of_size_k_2(k, arr):
     max_sum = -sys.maxsize - 1
-    winSum, winStart = 0, 0
+    win_sum = 0
 
-    for winEnd in range(len(arr)):
-        winSum += arr[winEnd]
-        if winEnd >= k - 1:
-            max_sum = max(max_sum, winSum)
-            winSum -= arr[winStart]
+    for win_end, v in enumerate(arr):
+        win_sum += v
+        if win_end >= k:
+            win_sum -= arr[win_end - k]
+            
+        if win_end >= k - 1:
+            max_sum = max(max_sum, win_sum)
 
     return max_sum
 

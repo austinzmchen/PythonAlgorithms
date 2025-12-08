@@ -1,3 +1,9 @@
+# Statement
+#
+# Given an array of integers nums, and an integer k, 
+#   return the maximum average of a contiguous subarray of length k.
+
+
 def find_averages_of_subarrays(K, arr):
   result = []
   windowSum, windowStart = 0.0, 0
@@ -13,15 +19,15 @@ def find_averages_of_subarrays(K, arr):
 
 def find_averages_of_subarrays2(K, arr):
     res = []
-    winSum = 0
+    win_sum = 0
 
-    for winEnd in range(len(arr)):
-        winSum += arr[winEnd]
-        if winEnd >= K:
-            winSum -= arr[winEnd - K]
-
-        if winEnd >= K - 1:
-            res.append(winSum / K)
+    for win_end, v in enumerate(arr):
+        win_sum += v
+        if win_end >= K - 1:
+            res.append(win_sum / K)
+            
+        if win_end >= K:
+            win_sum -= arr[win_end - K]
 
     return res
 

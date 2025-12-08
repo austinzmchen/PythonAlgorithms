@@ -1,32 +1,29 @@
-from typing import DefaultDict
-
 
 def find_string_anagrams(str, pattern):
-    _dict = DefaultDict(int)
+    _dict = {}
     for p in pattern:
-        _dict[p] += 1
-    
-    _count = len(_dict)
-    _list = []
+        _dict[p] = _dict.setdefault(p, 0) + 1
+    count = len(_dict)
+    res = []
 
-    for win_end in range(len(str)):
-        c = str[win_end]
-        if c in _dict:
-            _dict[c] -= 1
-            if _dict[c] == 0:
-                _count -= 1
+    for win_e, v in enumerate(str):
+        if v in _dict:
+            _dict[v] -= 1
+            if _dict[v] == 0:
+                count -= 1
         
-        c_start = win_end - len(pattern)
-        if c_start >= 0:
-            if str[c_start] in _dict:
-                if _dict[str[c_start]] == 0:
-                    _count += 1
-                _dict[str[c_start]] += 1
+        win_s = win_e - len(pattern) + 1
+        if count == 0:
+            res.append(win_s)
+            
+        if win_s >= 0:
+            char_s = str[win_s]
+            if char_s in _dict:
+                if _dict[char_s] == 0:
+                    count += 1
+                _dict[char_s] += 1
+    return res
 
-        if _count == 0:
-            _list.append(c_start + 1)
-
-    return _list
 
 def main():
   print(find_string_anagrams("ppqp", "pq"))

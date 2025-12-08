@@ -1,41 +1,43 @@
-import sys
-from typing import DefaultDict
+# find smallest substring that contains the pattern
 
 def find_substring(str, pattern):
-    c_start, max_len = 0, sys.maxsize
-    _dict = DefaultDict(int)
+    import sys
+    res_idx, max_len = 0, sys.maxsize
+    _dict = {}
 
     for p in pattern:
-        _dict[p] += 1
-
-    _count = len(_dict)
+        _dict[p] = _dict.setdefault(p, 0) + 1
+    count = len(_dict)
 
     win_start = 0
-    for win_end in range(len(str)):
-        c = str[win_end]
-        if c in _dict:
-            _dict[c] -= 1
-            if _dict[c] == 0:
-                _count -= 1
+    for win_end, v in enumerate(str):
+        if v in _dict:
+            _dict[v] -= 1
+            if _dict[v] == 0:
+                count -= 1
         
-        while _count == 0:
-            if str[win_start] in _dict:
-                if _dict[str[win_start]] == 0:
-                    _count += 1
-                _dict[str[win_start]] += 1
+        while count == 0:
+            char_s = str[win_start]
+            if char_s in _dict:
+                if _dict[char_s] == 0:
+                    count += 1
+                _dict[char_s] += 1
 
+            # update min substring
             if win_end - win_start + 1 < max_len:
                 max_len = win_end - win_start + 1
-                c_start = win_start
+                res_idx = win_start
 
             win_start += 1
 
-    return str[c_start : c_start + max_len] if max_len != sys.maxsize else ""
+    return (str[res_idx : res_idx + max_len]
+            if max_len != sys.maxsize
+            else "")
 
 
 def main():
-  print(find_substring("aabdec", "abc"))
-  print(find_substring("abdbca", "abc"))
-  print(find_substring("adcad", "abc"))
+  print('"aabdec", "abc"' + ":" + find_substring("aabdec", "abc"))
+  print('"abdbca", "abc"' + ":" + find_substring("abdbca", "abc"))
+  print('"adcad",  "abc"' + ":" + find_substring("adcad", "abc"))
 
 main()

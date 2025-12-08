@@ -1,30 +1,29 @@
-from typing import DefaultDict
 
+def find_permutation(str, pattern) -> bool:
+    _dict = {}
+    for v in pattern:
+        _dict[v] = _dict.setdefault(v, 0) + 1
+    count = len(_dict) # count of distinct chars in pattern
 
-def find_permutation(str, pattern):
-    _dict = DefaultDict(int)
-    for c in pattern:
-        _dict[c] += 1
-    
-    _count = len(_dict)
-
-    for winE in range(len(str)):
-        c = str[winE]
-        if c in _dict:
-            _dict[c] -= 1
-            if _dict[c] == 0: _count -= 1
-
-        if winE >= len(pattern):
-            c_start = winE - len(pattern)
-
-            if str[c_start] in _dict:
-                if _dict[str[c_start]] == 0:
-                    _count += 1
-                _dict[str[c_start]] += 1
+    for win_e, v in enumerate(str):
+        # update count
+        if v in _dict:
+            _dict[v] -= 1
+            if _dict[v] == 0:
+                count -= 1
         
-        if _count == 0:
+        if count == 0:
             return True
-    
+        
+        win_s = win_e - len(pattern) + 1
+        if win_s >= 0:
+            char_s = str[win_s]
+            # update count as win_s idx is updated
+            if char_s in _dict:
+                if _dict[char_s] == 0: # 0 not deleted
+                    count += 1
+                _dict[char_s] += 1
+
     return False
 
 
