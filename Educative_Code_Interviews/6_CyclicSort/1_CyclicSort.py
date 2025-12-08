@@ -1,11 +1,12 @@
+# input is a list of consecutive ints from 1
+
 def cyclic_sort(nums):
   i = 0
   while i < len(nums):
     if nums[i] != i + 1:
       j = nums[i] - 1
-      tmp = nums[i]
-      nums[i] = nums[j]
-      nums[j] = tmp
+
+      nums[i], nums[j] = nums[j], nums[i]
     else:
       i += 1
     

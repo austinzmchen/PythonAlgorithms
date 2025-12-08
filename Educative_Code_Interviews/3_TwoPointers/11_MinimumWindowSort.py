@@ -1,5 +1,30 @@
-import math
+# """
+# Minimum Window Sort (Two Pointers Pattern)
 
+# Problem:
+# Given an array, find the length of the smallest subarray that, when sorted,
+# will make the entire array sorted.
+
+# Example 1:
+# Input: [1, 2, 5, 3, 7, 10, 9, 12]
+# Output: 5
+# Explanation: Sort [5, 3, 7, 10, 9] to make entire array sorted
+
+# Example 2:
+# Input: [1, 3, 2, 0, -1, 7, 10]
+# Output: 5
+# Explanation: Sort [1, 3, 2, 0, -1] to make entire array sorted
+
+# Example 3:
+# Input: [1, 2, 3]
+# Output: 0
+# Explanation: Already sorted
+
+# Example 4:
+# Input: [3, 2, 1]
+# Output: 3
+# Explanation: Need to sort entire array
+# """
 
 def shortest_window_sort(arr):
   low, high = 0, len(arr) - 1
@@ -14,6 +39,7 @@ def shortest_window_sort(arr):
   import sys
   _min = sys.maxsize
   _max = -sys.maxsize - 1
+  
   for i in range(low, high + 1):
     _min = min(_min, arr[i])
     _max = max(_max, arr[i])

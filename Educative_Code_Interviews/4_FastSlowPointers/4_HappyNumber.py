@@ -1,12 +1,31 @@
+"""
+Happy Number (Fast & Slow Pointers Pattern)
 
-def find_happy_number(num):
+Problem:
+A happy number is a number where the process of repeatedly replacing the number
+by the sum of the squares of its digits eventually leads to 1.
+
+If the process loops endlessly in a cycle that doesn't include 1, the number
+is not happy.
+
+Examples:
+    Input: 23
+    Process: 23 -> 2² + 3² = 4 + 9 = 13
+             13 -> 1² + 3² = 1 + 9 = 10
+             10 -> 1² + 0² = 1 + 0 = 1
+    Output: True (Happy number!)    
+"""
+
+
+def find_happy_number(num) -> bool:
   fast, slow = num, num
   while True:
     slow = next_num(slow)
     fast = next_num(next_num(fast))
     if slow == fast:
       return fast == 1
-  pass
+
+  return False
 
 
 def next_num(num) -> int:

@@ -1,3 +1,5 @@
+# `#`means backspace, compare if the final string after backspaces are used
+
 def backspace_compare(str1, str2):
   i1 = len(str1) - 1
   i2 = len(str2) - 1
@@ -13,10 +15,8 @@ def backspace_compare(str1, str2):
     
     if i1 == 0 and i2 == 0:
       return True
-    
     i1 -= 1
     i2 -= 1
-
 
 
 def get_next_valid_char_index(str, index):
@@ -30,7 +30,6 @@ def get_next_valid_char_index(str, index):
       index -= 1
     else:
       break
-  
   return index
 
 

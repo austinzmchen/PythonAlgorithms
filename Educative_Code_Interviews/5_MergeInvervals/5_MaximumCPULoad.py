@@ -1,7 +1,7 @@
 from heapq import *
 
-
 class job:
+  
   def __init__(self, start, end, cpu_load):
     self.start = start
     self.end = end
@@ -18,13 +18,13 @@ def find_max_cpu_load(jobs):
   max_load = -sys.maxsize - 1
   curr_load = 0
 
-  for i in range(len(jobs)):
-    while len(min_heap) > 0 and min_heap[0].end <= jobs[i].start:
-      curr_load -= min_heap[0].cpu_load
-      heappop(min_heap)
-    
-    curr_load += jobs[i].cpu_load
-    heappush(min_heap, jobs[i])
+  for _, job in enumerate(jobs):
+    while len(min_heap) > 0 and min_heap[0].end <= job.start:
+      jb = heappop(min_heap)
+      curr_load -= jb.cpu_load
+      
+    curr_load += job.cpu_load
+    heappush(min_heap, job)
     max_load = max(max_load, curr_load)
 
   return max_load

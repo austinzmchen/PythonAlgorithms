@@ -1,3 +1,8 @@
+# reorder the list to be alternated
+# 2, 4, 6, 8, 10, 12
+# to 
+# 2, 12, 4, 10, 6, 8
+
 from __future__ import print_function
 
 
@@ -15,6 +20,7 @@ class Node:
 
 
 def reorder(head):
+  # find the middle node
   slow, fast = head, head
   while fast != None and fast.next != None:
     slow = slow.next

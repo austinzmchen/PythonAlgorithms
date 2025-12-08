@@ -1,21 +1,46 @@
-def insert(intervals, newInterval):
+# /*
+# Problem Statement #
+# Given a list of non-overlapping intervals sorted by their start time, 
+# insert a given interval at the correct position and merge all necessary intervals 
+# to produce a list that has only mutually exclusive intervals.
+
+# Example 1:
+# Input: Intervals=[[1,3], [5,7], [8,12]], New Interval=[4,6]
+# Output: [[1,3], [4,7], [8,12]]
+# Explanation: After insertion, since [4,6] overlaps with [5,7], we merged them into one [4,7].
+
+# Example 2:
+# Input: Intervals=[[1,3], [5,7], [8,12]], New Interval=[4,10]
+# Output: [[1,3], [4,12]]
+# Explanation: After insertion, since [4,10] overlaps with [5,7] & [8,12], we merged them into [4,12].
+
+# Example 3:
+# Input: Intervals=[[2,3],[5,7]], New Interval=[1,4]
+# Output: [[1,4], [5,7]]
+# Explanation: After insertion, since [1,4] overlaps with [2,3], we merged them into one [1,4].
+#
+# */
+
+def insert(intervals, new_interval):
   merged = []
   i = 0
 
-  while i < len(intervals) and intervals[i][1] < newInterval[0]:
-    merged.append(list(intervals[i]))
-    i += 1
+  for _, inv in enumerate(intervals):
+    if inv[1] < new_interval[0]:
+      merged.append(inv)
+      i += 1
+    else: break
   
-  curr = list(newInterval)
-  for j in range(i, len(intervals)):
-    inv = intervals[j]
-    if inv[0] <= curr[1]:
-      curr = [min(curr[0], inv[0]), max(curr[1], inv[1])]
-    else:
-      merged.append(curr)
-      curr = list(inv)
+  start, end = new_interval[0], new_interval[1]
 
-  merged.append(curr)
+  for _, inv in enumerate(intervals[i:], start=i):
+    if inv[0] <= end:
+      start, end = min(start, inv[0]), max(end, inv[1])
+    else:
+      merged.append([start, end])
+      start, end = inv[0], inv[1] #
+
+  merged.append([start, end])
   return merged
 
 
