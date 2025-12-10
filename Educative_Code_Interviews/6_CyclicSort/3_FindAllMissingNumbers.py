@@ -1,24 +1,22 @@
+
 def find_missing_numbers(nums):
-  missingNumbers = []
+  res = []
   
   i = 0
   while i < len(nums):
     if nums[i] != i + 1:
       j = nums[i] - 1
+      # to avoid infinite swapping, check if the second num is at the right spot
       if nums[j] != j + 1:
-        tmp = nums[i]
-        nums[i] = nums[j]
-        nums[j] = tmp
-      else:
-        i += 1
-    else:
-      i += 1
+        nums[i], nums[j] = nums[j], nums[i]
+        continue
+    i += 1
 
-  for i in range(0, len(nums)):
-    if nums[i] != i + 1:
-      missingNumbers.append(i + 1)
+  for i, v in enumerate(nums):
+    if v != i + 1:
+      res.append(i + 1)
       
-  return missingNumbers
+  return res
 
 
 def main():

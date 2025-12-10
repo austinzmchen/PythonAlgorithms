@@ -1,6 +1,7 @@
+# connect all the nodes from the tree to a linked list using `next`
+
 from __future__ import print_function
 from collections import deque
-
 
 class TreeNode:
   def __init__(self, val):
@@ -17,21 +18,22 @@ class TreeNode:
 
 
 def connect_all_siblings(root):
-  q = deque()
-  q.append(root)
+  deq = deque()
+  deq.append(root)
   prev = None
 
-  while len(q) > 0:
-    n = q.popleft()
-    if prev:
-      prev.next = n
+  while deq:
+    n = deq.popleft()
 
     if n.left:
-      q.append(n.left)
+      deq.append(n.left)
     if n.right:
-      q.append(n.right)
+      deq.append(n.right)
+    
+    if prev:
+      prev.next = n
     prev = n
-
+  #
   return root
 
 
@@ -44,6 +46,5 @@ def main():
   root.right.right = TreeNode(5)
   connect_all_siblings(root)
   root.print_tree()
-
 
 main()

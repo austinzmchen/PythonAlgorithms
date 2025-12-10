@@ -1,8 +1,11 @@
-def find_corrupt_numbers(nums):
+
+def find_corrupt_numbers_1(nums):
   i = 0
+  
   while i < len(nums):
     if nums[i] != i + 1:
       j = nums[i] - 1
+      
       if nums[j] == nums[i]:
         i += 1
       else:
@@ -13,6 +16,25 @@ def find_corrupt_numbers(nums):
   for i in range(len(nums)):
     if nums[i] != i + 1:
       return [nums[i], i + 1]
+      
+  return [-1, -1]
+
+
+def find_corrupt_numbers(nums):
+  i = 0
+  
+  while i < len(nums):
+    if nums[i] != i + 1:
+      j = nums[i] - 1
+      
+      if nums[j] != j + 1:
+        nums[i], nums[j] = nums[j], nums[i]
+        continue
+    i += 1
+  
+  for i, v in enumerate(nums):
+    if v != i + 1:
+      return [v, i + 1]
       
   return [-1, -1]
 

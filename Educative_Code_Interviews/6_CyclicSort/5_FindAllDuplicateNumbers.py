@@ -1,23 +1,22 @@
+
 def find_all_duplicates(nums):
-  duplicateNumbers = []
+  res = []
   i = 0
+  
   while i < len(nums):
     if nums[i] != i + 1:
       j = nums[i] - 1
-      if nums[j] != j + 1:
-        tmp = nums[i]
-        nums[i] = nums[j]
-        nums[j] = tmp
-      else:
-        i += 1
-    else:
-      i += 1
-
-  for i in range(0, len(nums)):
-    if nums[i] != i + 1:
-      duplicateNumbers.append(nums[i])
       
-  return duplicateNumbers
+      if nums[j] != j + 1:
+        nums[i], nums[j] = nums[j], nums[i]
+        continue
+    i += 1
+
+  for i, v in enumerate(nums):
+    if v != i + 1:
+      res.append(v)
+      
+  return res
 
 
 def main():

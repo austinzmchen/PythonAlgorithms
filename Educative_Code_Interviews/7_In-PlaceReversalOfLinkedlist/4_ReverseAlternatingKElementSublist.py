@@ -1,8 +1,7 @@
 from __future__ import print_function
-from typing import Tuple
-
 
 class Node:
+  
   def __init__(self, value, next=None):
     self.value = value
     self.next = next
@@ -16,13 +15,12 @@ class Node:
 
 
 def reverse_alternate_k_elements(head, k):
-  import sys
-  dummy = Node(sys.maxsize, head)
-  prev, curr = dummy, dummy
-  skip = True
+  dummy = Node(0, head)
+  p_before, curr = dummy, head
+  flip = True
 
   while True:
-    i = 0
+    i = 1
     while i < k and curr != None:
       curr = curr.next
       i += 1
@@ -30,22 +28,23 @@ def reverse_alternate_k_elements(head, k):
     if curr == None:
       break
     
-    if skip:
+    if flip:
       curr_next = curr.next
-      new_head, new_tail = reverse(prev.next, curr)
-      prev.next = new_head
+      new_head, new_tail = reverse(p_before.next, curr)
+      p_before.next = new_head
       new_tail.next = curr_next
 
-      prev, curr = new_tail, new_tail
+      p_before, curr = new_tail, curr_next
     else:
-      prev = curr
+      p_before = curr
+      curr = curr.next
 
-    skip = not skip
-
+    flip = not flip
+  #
   return dummy.next
 
 
-def reverse(p_node, q_node) -> Tuple:
+def reverse(p_node, q_node) -> tuple:
   prev = None
   curr = p_node
   end = q_node.next
@@ -53,6 +52,7 @@ def reverse(p_node, q_node) -> Tuple:
   while curr != end:
     next = curr.next
     curr.next = prev
+    
     prev = curr
     curr = next
 

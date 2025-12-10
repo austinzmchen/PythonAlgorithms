@@ -1,3 +1,5 @@
+# connect the nodes on the same level to a linked list using `next`
+
 from __future__ import print_function
 from collections import deque
 
@@ -25,29 +27,30 @@ class TreeNode:
 
 
 def connect_level_order_siblings(root):
-  if root == None:
+  if not root:
     return []
 
-  q = deque()
-  q.append(root)
+  deq = deque()
+  deq.append(root)
   prev = None
 
-  while len(q) > 0:
-    length = len(q)
+  while deq:
+    length = len(deq)
 
     for _ in range(length):
-      node = q.popleft()
-      if prev != None:
-        prev.next = node
-
-      if node.left != None:
-        q.append(node.left)
-      if node.right != None:
-        q.append(node.right)
-      prev = node
+      node = deq.popleft()
       
+      if node.left:
+        deq.append(node.left)
+      if node.right:
+        deq.append(node.right)
+      
+      if prev:
+        prev.next = node
+      prev = node
+    #   
     prev = None
-
+  #
   return root
 
 

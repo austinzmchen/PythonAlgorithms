@@ -9,25 +9,36 @@ class TreeNode:
 
 
 def tree_right_view(root):
-  result = []
-  q = deque()
-  q.append(root)
+  res = []
+  deq = deque()
+  deq.append(root)
 
-  while len(q) > 0:
-    for i in range(length := len(q)):
-      n = q.popleft()
+  while deq:
+    length = len(deq)
+    for i in range(length):
+      n = deq.popleft()
+      
       if i == length - 1:
-        result.append(n)
+        res.append(n)
 
       if n.left:
-        q.append(n.left)
+        deq.append(n.left)
       if n.right:
-        q.append(n.right)
-
-  return result
+        deq.append(n.right)
+  #
+  return res
 
 
 def main():
+  # Tree Structure:
+  #        12
+  #       /   \
+  #      7     1
+  #    /      /  \
+  #   9      10   5
+  #  /
+  # 3 
+  
   root = TreeNode(12)
   root.left = TreeNode(7)
   root.right = TreeNode(1)
@@ -39,6 +50,5 @@ def main():
   print("Tree right view: ")
   for node in result:
     print(str(node.val) + " ", end='')
-
 
 main()

@@ -1,5 +1,4 @@
-from typing import Deque
-
+from collections import deque
 
 class TreeNode:
   def __init__(self, val):
@@ -8,30 +7,39 @@ class TreeNode:
 
 
 def find_level_averages(root):
-  if root == None:
+  if not root:
     return []
 
-  result = []
-  q = Deque()
-  q.append(root)
+  res = []
+  deq = deque()
+  deq.append(root)
 
-  while len(q) > 0:
-    length = len(q)
-    list = []
-    for i in range(length):
-      node = q.popleft()
-      list.append(node.val)
-      if node.left != None:
-        q.append(node.left)
-      if node.right != None:
-        q.append(node.right)
-
-    result.append(sum(list) / len(list))
-
-  return result
+  while len(deq) > 0:
+    length = len(deq)
+    level = []
+    
+    for _ in range(length):
+      node = deq.popleft()
+      level.append(node.val)
+      
+      if node.left:
+        deq.append(node.left)
+      if node.right:
+        deq.append(node.right)
+    #
+    res.append(sum(level) / len(level))
+  #
+  return res
 
 
 def main():
+  # Tree Structure:
+  #        12
+  #       /   \
+  #      7     1
+  #    / \    /  \
+  #   9   2  10   5
+  
   root = TreeNode(12)
   root.left = TreeNode(7)
   root.right = TreeNode(1)

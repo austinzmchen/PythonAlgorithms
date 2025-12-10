@@ -8,30 +8,32 @@ class TreeNode:
 
 
 def traverse(root):
-  if root == None:
+  if not root:
     return []
 
-  result = []
-  q = deque()
-  q.append(root)
+  res = []
+  deq = deque()
+  deq.append(root)
 
-  while len(q) > 0:
-    length = len(q)
-    list = []
-    for i in range(length):
-      node = q.popleft()
-      list.append(node.val)
-      if node.left != None:
-        q.append(node.left)
-      if node.right != None:
-        q.append(node.right)
-
-    result.insert(0, list)
-
-  return result
+  while deq:
+    length = len(deq)
+    level = []
+    for _ in range(length):
+      node = deq.popleft()
+      level.append(node.val)
+      
+      if node.left:
+        deq.append(node.left)
+      if node.right:
+        deq.append(node.right)
+    #
+    res.insert(0, level)
+  #
+  return res
 
 
 def main():
+  # [12, 7, 1, 9, null, 10, 5]
   root = TreeNode(12)
   root.left = TreeNode(7)
   root.right = TreeNode(1)

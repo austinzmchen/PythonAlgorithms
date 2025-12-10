@@ -1,7 +1,26 @@
+# Problem Statement
+# Given a linked list and a number k, rotate the linked list to the right by k places.
+
+# Examples
+# Example 1:
+# Input: 1 -> 2 -> 3 -> 4 -> 5, k = 2
+# Output: 4 -> 5 -> 1 -> 2 -> 3
+#
+# Explanation: 
+# Rotate 1: 5 -> 1 -> 2 -> 3 -> 4
+# Rotate 2: 4 -> 5 -> 1 -> 2 -> 3
+
+# Example 2:
+# Input: 1 -> 2 -> 3, k = 4
+# Output: 3 -> 1 -> 2
+#
+# Explanation: k = 4 is same as k = 1 (since 4 % 3 = 1)
+#
+
 from __future__ import print_function
 
-
 class Node:
+  
   def __init__(self, value, next=None):
     self.value = value
     self.next = next
@@ -15,9 +34,7 @@ class Node:
 
 
 def rotate(head, rotations):
-  import sys
-  dummy = Node(sys.maxsize)
-  dummy.next = head
+  dummy = Node(0, next=head)
 
   tail = dummy
   length = 0
@@ -25,6 +42,7 @@ def rotate(head, rotations):
     tail = tail.next
     length += 1
 
+  # Explanation: k = 4 is same as k = 1 (since 4 % 3 = 1)
   rots = rotations % length
   count = length - rots
   

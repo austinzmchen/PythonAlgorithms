@@ -1,7 +1,4 @@
 from __future__ import print_function
-import sys
-from typing import Tuple
-
 
 class Node:
   def __init__(self, value, next=None):
@@ -16,36 +13,32 @@ class Node:
     print()
 
 
-def reverse_every_k_elements(head, k):
-  dummy = Node(sys.maxsize, next=head)
-  p_before = dummy
+def reverse_sub_list(head, p_value, q_value):
+  p_before = None
+  q = None
+  dummy = Node(0, next=head)
 
-  prev = None
+  # find the p_before and q node
+  prev = dummy
   curr = head
-  count = 0
-
   while curr != None:
+    if curr.value == p_value:
+      p_before = prev
+    elif curr.value == q_value:
+      q = curr
+    #
     prev = curr
     curr = curr.next
-    count += 1
 
-    if count == k:
-      rev_list_head, rev_list_tail = reverse(p_before.next, prev)
-      p_before.next = rev_list_head
-      rev_list_tail.next = curr
-      p_before = rev_list_tail
-      count = 0
-
-
-  rev_list_head, rev_list_tail = reverse(p_before.next, prev)
-  p_before.next = rev_list_head
-  rev_list_tail.next = curr
-  p_before = rev_list_tail
-
+  q_after = q.next
+  new_head, new_tail = reverse(p_before.next, q)
+  p_before.next = new_head
+  new_tail.next = q_after
+  # use dummy so that p could be the head
   return dummy.next
 
 
-def reverse(p_node, q_node) -> Tuple:
+def reverse(p_node, q_node) -> tuple:
   prev = None
   curr = p_node
   end = q_node.next
@@ -53,6 +46,7 @@ def reverse(p_node, q_node) -> Tuple:
   while curr != end:
     next = curr.next
     curr.next = prev
+    
     prev = curr
     curr = next
 
@@ -65,16 +59,12 @@ def main():
   head.next.next = Node(3)
   head.next.next.next = Node(4)
   head.next.next.next.next = Node(5)
-  head.next.next.next.next.next = Node(6)
-  head.next.next.next.next.next.next = Node(7)
-  head.next.next.next.next.next.next.next = Node(8)
 
   print("Nodes of original LinkedList are: ", end='')
   head.print_list()
-  result = reverse_every_k_elements(head, 3)
+  result = reverse_sub_list(head, 2, 4)
   print("Nodes of reversed LinkedList are: ", end='')
   result.print_list()
 
 
 main()
-
