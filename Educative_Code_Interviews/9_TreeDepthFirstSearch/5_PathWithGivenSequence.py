@@ -6,23 +6,29 @@ class TreeNode:
 
 
 def find_path(root, sequence):
-  return recur(root, sequence, 0)
+  def recur(node, idx):
+    if not node:
+      return False
 
+    if sequence[idx] != node.val:
+      return False
+    if node.left == None and node.right == None:
+      return True
 
-def recur(root, sequence, idx):
-  if root == None:
-    return False
-
-  if sequence[idx] != root.val:
-    return False
-  if root.left == None and root.right == None:
-    return True
-
-  return recur(root.left, sequence, idx + 1) or recur(root.right, sequence, idx + 1)
+    return recur(node.left, idx + 1) or \
+          recur(node.right, idx + 1)
+  #
+  return recur(root, 0)
 
 
 def main():
-
+  # Tree Structure:
+  #         1
+  #       /   \
+  #      0     1
+  #    /      /  \
+  #   1      6    5
+  
   root = TreeNode(1)
   root.left = TreeNode(0)
   root.right = TreeNode(1)

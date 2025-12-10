@@ -1,3 +1,4 @@
+
 class TreeNode:
   def __init__(self, val, left=None, right=None):
     self.val = val
@@ -6,17 +7,26 @@ class TreeNode:
 
 
 def has_path(root, sum):
-  if root == None:
+  if not root:
     return False
   
-  if sum == root.val and root.left == None and root.right == None:
+  if sum == root.val and \
+    root.left is None and \
+    root.right is None:
     return True
 
-  return has_path(root.left, sum - root.val) or has_path(root.right, sum - root.val)
+  return has_path(root.left, sum - root.val) or \
+        has_path(root.right, sum - root.val)
 
 
 def main():
-
+  # Tree Structure:
+  #        12
+  #       /   \
+  #      7     1
+  #    /      /  \
+  #   9      10   5
+  
   root = TreeNode(12)
   root.left = TreeNode(7)
   root.right = TreeNode(1)

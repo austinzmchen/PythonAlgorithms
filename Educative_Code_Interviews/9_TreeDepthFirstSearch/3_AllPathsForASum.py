@@ -6,38 +6,47 @@ class TreeNode:
 
 
 def find_paths(root, sum):
-  allPaths = []
-  path = []
-  recur(root, allPaths, path, sum)
-  return allPaths
-
-
-def recur(root, all_paths, path, sum):
-  if root == None:
-    return
+  res = []
+  path = [] # could have used stack or deque
   
-  path.append(root.val)
+  def recur(node, sum) -> None:
+    if not node:
+      return
+    
+    path.append(node.val)
 
-  if root.left == None and root.right == None and root.val == sum:  
-    all_paths.append(list(path))
-  else:
-    recur(root.left, all_paths, path, sum - root.val)
-    recur(root.right, all_paths, path, sum - root.val)
-  
-  path.remove(root.val)
+    if node.left is None and \
+      node.right is None and \
+      node.val == sum:  
+      
+      res.append(list(path))
+    else:
+      recur(node.left, sum - node.val)
+      recur(node.right, sum - node.val)
+    
+    path.remove(node.val)
+  #
+  recur(root, sum)
+  return res
 
 
 def main():
-
+  # Tree Structure:
+  #        12
+  #       /   \
+  #      7     1
+  #    /      /  \
+  #   4      10   5
+  
   root = TreeNode(12)
   root.left = TreeNode(7)
   root.right = TreeNode(1)
   root.left.left = TreeNode(4)
   root.right.left = TreeNode(10)
   root.right.right = TreeNode(5)
+  
   sum = 23
   print("Tree paths with sum " + str(sum) +
         ": " + str(find_paths(root, sum)))
-
 
 main()
