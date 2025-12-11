@@ -1,34 +1,38 @@
 from collections import deque
 
 def topological_sort(vertices, edges):
-  sortedOrder = []
+  sorted_order = []
   adj_dict = {}
   in_degrees = {}
+  
+  # need to build in_degree and adj_dict
   for i in range(vertices):
-    adj_dict[i] = []
     in_degrees[i] = 0
+    adj_dict[i] = []
 
   for pair in edges:
-    adj_dict[pair[0]].append(pair[1])
-    in_degrees[pair[1]] += 1
+    start, end = pair[0], pair[1]
+    adj_dict.setdefault(start, []).append(end)
+    in_degrees[end] += 1
 
   queue = deque()
-  for key, value in in_degrees.items():
-    if value == 0:
-      queue.append(key)
+  # first the root vert to the queue
+  for vert, degs in in_degrees.items():
+    if degs == 0:
+      queue.append(vert)
 
-  while len(queue) > 0:
+  while queue:
     size = len(queue)
-    for i in range(size):
-      n = queue.popleft()
-      sortedOrder.append(n)
+    for _ in range(size):
+      vert = queue.popleft()
+      sorted_order.append(vert)
 
-      for adj in adj_dict[n]:
+      for adj in adj_dict[vert]:
         in_degrees[adj] -= 1
         if in_degrees[adj] == 0:
           queue.append(adj)
 
-  return sortedOrder
+  return sorted_order
 
 
 def main():
@@ -38,6 +42,5 @@ def main():
         str(topological_sort(5, [[4, 2], [4, 3], [2, 0], [2, 1], [3, 1]])))
   print("Topological sort: " +
         str(topological_sort(7, [[6, 4], [6, 2], [5, 3], [5, 4], [3, 0], [3, 1], [3, 2], [4, 1]])))
-
 
 main()
