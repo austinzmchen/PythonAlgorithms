@@ -1,5 +1,7 @@
+
 def search_next_letter(letters, key):
   l, r = 0, len(letters) - 1
+  
   while l <= r:
     mid = r + (l - r) // 2
     
@@ -18,6 +20,5 @@ def main():
   print(search_next_letter(['a', 'c', 'f', 'h'], 'b'))
   print(search_next_letter(['a', 'c', 'f', 'h'], 'm'))
   print(search_next_letter(['a', 'c', 'f', 'h'], 'h'))
-
 
 main()

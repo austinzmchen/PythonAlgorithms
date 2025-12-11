@@ -1,3 +1,4 @@
+
 def search_bitonic_array(arr, key):
   l, r = 0, len(arr) - 1
   while l < r:
@@ -5,16 +6,19 @@ def search_bitonic_array(arr, key):
 
     if arr[mid] == key:
       return mid
+    
     if arr[mid] < arr[mid + 1]:
       if key <= arr[mid + 1]:
         return order_argnostic_binary_search(arr, key, l, mid + 1)
       else:
         l = mid + 1
+        
     else:
       if key <= arr[mid]:
         return order_argnostic_binary_search(arr, key, mid, r)
       else:
         r = mid
+        
   return -1
 
 
@@ -44,6 +48,5 @@ def main():
   print(search_bitonic_array([3, 8, 3, 1], 8))
   print(search_bitonic_array([1, 3, 8, 12], 12))
   print(search_bitonic_array([10, 9, 8], 10))
-
 
 main()
