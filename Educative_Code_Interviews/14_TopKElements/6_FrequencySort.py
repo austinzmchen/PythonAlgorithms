@@ -1,38 +1,26 @@
-from heapq import *
-from typing import DefaultDict, Tuple
-
+from heapq import heappop, heappush
 
 def sort_character_by_frequency(str):
-  _ddict = DefaultDict(int)
+  freq_dict = {}
   for c in str:
-    _ddict[c] += 1
+    freq_dict[c] = freq_dict.setdefault(c, 0) + 1
 
-  maxHeap = []
-  for c, freq in _ddict.items():
-    heappush(maxHeap, DataWrap((c, freq)))
+  max_heap = []
+  for c, freq in freq_dict.items():
+    heappush(max_heap, (-freq, c))
     
-  result = []
-  while len(maxHeap) > 0:
-    c, freq = heappop(maxHeap).info
-    result.append(c * freq)
+  res = []
+  while max_heap:
+    freq, c = heappop(max_heap)
+    res.append(c * -freq)
 
-  return "".join(result)
-
-
-class DataWrap:
-  def __init__(self, info: Tuple) -> None:
-    self.info = info
-
-  def __lt__(self, other):
-    return self.info[1] > other.info[1]
+  return "".join(res)
 
 
 def main():
-
   print("String after sorting characters by frequency: " +
         sort_character_by_frequency("Programming"))
   print("String after sorting characters by frequency: " +
         sort_character_by_frequency("abcbab"))
-
 
 main()

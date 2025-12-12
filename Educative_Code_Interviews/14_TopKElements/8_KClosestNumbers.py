@@ -1,24 +1,18 @@
-from heapq import *
 
+from heapq import heappop, heappush
 
 def find_closest_elements(arr, K, X):
-  class DataWrap:
-    def __init__(self, num) -> None:
-      self.num = num
-
-    def __lt__(self, other):
-      return abs(self.num - X) > abs(other.num - X)
-
-  maxHeap = []
-  for n in arr:
-    if len(maxHeap) < K:
-      heappush(maxHeap, DataWrap(n))
+  max_heap = []
+  
+  for i, n in enumerate(arr):
+    if i < K:
+      heappush(max_heap, (-abs(n-X), n))
     else:
-      if abs(n - X) < abs(maxHeap[0].num - X):
-        heappop(maxHeap)
-        heappush(maxHeap, DataWrap(n))
+      if abs(n - X) < -max_heap[0][0]:
+        heappop(max_heap)
+        heappush(max_heap, (-abs(n-X), n))
 
-  return sorted([v.num for v in maxHeap])
+  return sorted([t[1] for t in max_heap])
 
 
 def main():
@@ -28,6 +22,5 @@ def main():
         str(find_closest_elements([2, 4, 5, 6, 9], 3, 6)))
   print("'K' closest numbers to 'X' are: " +
         str(find_closest_elements([2, 4, 5, 6, 9], 3, 10)))
-
 
 main()

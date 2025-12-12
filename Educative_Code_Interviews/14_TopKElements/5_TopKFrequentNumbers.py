@@ -1,30 +1,26 @@
-from typing import DefaultDict
-from heapq import *
+from heapq import heappop, heappush
 
 def find_k_frequent_numbers(nums, k):
-  _ddict = DefaultDict(int)
+  freq_dict = {}
   for n in nums:
-    _ddict[n] += 1
+    freq_dict[n] = freq_dict.setdefault(n, 0) + 1
 
-  minHeap = []
-  for num, freq in _ddict.items():
-    if len(minHeap) < k:
-      heappush(minHeap, num)
+  min_heap = []
+  for num, freq in freq_dict.items():
+    if len(min_heap) < k:
+      heappush(min_heap, (freq, num))
     else:
-      if freq > _ddict[minHeap[0]]:
-        heappop(minHeap)
-        heappush(minHeap, num)
+      if freq > min_heap[0][0]:
+        heappop(min_heap)
+        heappush(min_heap, (freq, num))
 
-  return minHeap
+  return [t[1] for t in min_heap]
 
 
 def main():
-
   print("Here are the K frequent numbers: " +
         str(find_k_frequent_numbers([1, 3, 5, 12, 11, 12, 11], 2)))
-
   print("Here are the K frequent numbers: " +
         str(find_k_frequent_numbers([5, 12, 11, 3, 11], 2)))
-
 
 main()
