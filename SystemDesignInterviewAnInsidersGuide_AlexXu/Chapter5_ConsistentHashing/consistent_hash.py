@@ -72,6 +72,38 @@ class ConsistentHash:
         
         return self.ring[self.sorted_nodes[idx]]
     
+    def get_nodes(self, key, n=1):
+        """
+        For Replication in Chapter 6
+        
+        Get n nodes responsible for a key (for replication).
+        Returns unique physical nodes.
+        """
+        if not self.ring or n <= 0:
+            return []
+        
+        hash_val = self._hash(key)
+        idx = bisect_right(self.sorted_nodes, hash_val)
+        
+        nodes = []
+        seen = set() # since there are virtual nodes, remove duplicates
+        
+        # Walk clockwise around the ring
+        for i in range(len(self.sorted_nodes)):
+            # so idx wraps around the ring
+            pos = (idx + i) % len(self.sorted_nodes)
+            
+            node = self.ring[self.sorted_nodes[pos]]
+            
+            if node not in seen:
+                nodes.append(node)
+                seen.add(node)
+                
+                if len(nodes) == n:
+                    break
+        
+        return nodes
+    
     def distribution(self, keys):
         """Analyze key distribution across nodes."""
         dist = {}
@@ -97,6 +129,11 @@ if __name__ == "__main__":
     for key in keys:
         node = ch.get_node(key)
         print(f"Key '{key}' -> {node}")
+    
+    print("\n--- Testing Replication (3 replicas) ---")
+    key = "important_data"
+    replicas = ch.get_nodes(key, n=3)
+    print(f"Key '{key}' replicated to: {replicas}")
     
     print("\n--- Adding New Server ---")
     ch.add_node("server4")
