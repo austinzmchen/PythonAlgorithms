@@ -1,6 +1,5 @@
 from LinkedList import ListNode
 
-
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
         iter = head
@@ -27,23 +26,26 @@ class Solution:
       
       
     def removeNthFromEnd2(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        if not head: return None
-        #
-        count = 0
+        dummy = ListNode(0, head)
+        
+        size = 0
         curr = head
         while curr:
-            count += 1
+            size += 1
             curr = curr.next
-        #
-        if n > count:
+        
+        if n > size:
             return None
-        #
-        dummy = ListNode(-1, head)
-        curr = dummy
+        
+        m = size - n
         i = 0
-        while i < count - n:
+        prev, curr = dummy, head
+
+        while i < m:
+            prev = curr
             curr = curr.next
             i += 1
-        #
-        curr.next = curr.next.next
+
+        # remove the curr node
+        prev.next = curr.next
         return dummy.next

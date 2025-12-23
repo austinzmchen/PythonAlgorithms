@@ -27,20 +27,21 @@ from typing import DefaultDict
 def length_of_longest_substring(str, k):
   res = 0
   win_start = 0
-  local_max_repeat = 0
+  repeat_char_count = 0
   _dict = DefaultDict(int)
 
   for win_e, v in enumerate(str):
     _dict[v] += 1
-    local_max_repeat = max(local_max_repeat, _dict[v])
+    repeat_char_count = max(repeat_char_count, _dict[v])
 
     # while k chars not enough to replace the other chars
-    while win_e - win_start + 1 - local_max_repeat > k:
+    while win_e - win_start + 1 - repeat_char_count > k:
       char_s = str[win_start]
       _dict[char_s] -= 1
       win_start += 1
       
-      # local_max_repeat not updated, seems that way
+      # We don't need to decrease repeat_char_count when shrinking because we only care about finding a window that's LONGER than our current best.
+      repeat_char_count = max(repeat_char_count, _dict.values())
 
     res = max(res, win_e - win_start + 1)
 

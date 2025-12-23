@@ -9,12 +9,10 @@ class Solution:
         def recur(node):
             if not node:
                 return
-            tmp = node.left
-            node.left = node.right
-            node.right = tmp
-            #
+            
             recur(node.left)
             recur(node.right)
-        #
+            node.left, node.right = node.right, node.left
+        
         recur(root)
         return root

@@ -12,28 +12,32 @@ class ListNode:
 # to compare and if they are same it will go to for next attribute and so on if two values are same 
 # it will throw "TypeError: unorderable types: Node() < Node()" error So to avoid that, 
 # 2nd parameter i which will be unique in the tuple has been taken
+
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        _min = []
-        i = 0
         from heapq import heappush, heappop
+        min_heap = []
+        i = 0 # used in tuple when preceding values are equal in heap
+                
         for node in lists:
             if node:
-                heappush(_min, (node.val, i, node))
+                # this will error when val is equal, and node is not comparable
+                heappush(min_heap, (node.val, i, node))
                 i += 1
-        #
-        new_head = ListNode(-1)
-        curr = new_head
-        while len(_min) > 0:
-            item = heappop(_min)
-            value, i, node = item
+
+        dummy = ListNode()
+        curr = dummy
+        
+        while min_heap:
+            value, i, node = heappop(min_heap)
             curr.next = ListNode(value)
+            
+            node = node.next
+            if node:
+                heappush(min_heap, (node.val, i, node))
             curr = curr.next
-            if node.next:
-                heappush(_min, (node.next.val, i, node.next))
-                i += 1
-        #
-        return new_head.next
+
+        return dummy.next
       
       
 lists = [ListNode(1), ListNode(1), ListNode(3)]
