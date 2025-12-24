@@ -41,4 +41,37 @@ Celebrity problem:
 - 300 million MAU
 - 50% users use twitter daily -> 150 million DAU
 - 2 tweets per user per day -> tweet QPS = 150 million * 2 tweets / 24 / 3600 = ~3500
-- Peek QPS = 2 * QPS 
+- Peek QPS = 2 * QPS
+
+
+## Video protocols
+
+- Codec = How you compress the item (vacuum seal, bubble wrap)
+  - Reduce file size while maintaining quality
+
+- Container = The box/package format (.mp4, .avi, .mov)
+  - Combine video, audio, subtitles, metadata into one file
+
+- Streaming Protocol = The delivery method (FedEx, UPS, postal service)
+  - How to deliver video over the network efficiently
+
+
+## Distributed System
+
+The Inevitable Choice:
+
+When a partition happens, you're forced to choose:
+[Node A] ----X---- [Node B]
+        (partition)
+
+- Write request arrives at Node A
+- Read request arrives at Node B
+
+Your only options:
+Choose Consistency (CP): Block/reject requests until partition heals
+- Node B refuses reads: "Service unavailable"
+- Sacrifices Availability
+
+Choose Availability (AP): Accept requests on both sides
+- Node B returns potentially stale data
+- Sacrifices Consistency

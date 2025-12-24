@@ -3,7 +3,7 @@ from heapq import heappop, heappush
 def find_k_frequent_numbers(nums, k):
   freq_dict = {}
   for n in nums:
-    freq_dict[n] = freq_dict.setdefault(n, 0) + 1
+    freq_dict[n] = freq_dict.get(n, 0) + 1
 
   min_heap = []
   for num, freq in freq_dict.items():
@@ -17,6 +17,25 @@ def find_k_frequent_numbers(nums, k):
   return [t[1] for t in min_heap]
 
 
+# what about this
+# submitted and passed on leetcode
+def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+    from heapq import heappush, heappush
+    min_heap = []
+
+    freq_map = {}
+    for n in nums:
+        freq_map[n] = freq_map.get(n, 0) + 1
+    
+    for num, freq in freq_map.items():
+        heappush(min_heap, (freq, num))
+    
+    while len(min_heap) > k:
+        heappop(min_heap)
+    
+    return [t[1] for t in min_heap]
+  
+  
 def main():
   print("Here are the K frequent numbers: " +
         str(find_k_frequent_numbers([1, 3, 5, 12, 11, 12, 11], 2)))
