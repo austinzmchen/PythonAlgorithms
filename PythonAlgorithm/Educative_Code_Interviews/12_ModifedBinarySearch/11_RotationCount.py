@@ -18,8 +18,11 @@ Example:
 # find the smallest number index
 def count_rotations(arr):
   l, r = 0, len(arr) - 1
+  
   while l < r:
+    print(f"{l=}, {r=}")
     mid = (l + r) // 2
+    
     if arr[mid] > arr[mid + 1]:
       return mid + 1
     
@@ -34,8 +37,8 @@ def count_rotations(arr):
 
 
 def main():
-  print(count_rotations([10, 15, 1, 3, 8]))
-  print(count_rotations([4, 5, 7, 9, 10, -1, 2]))
+  # print(count_rotations([10, 15, 1, 3, 8]))
+  # print(count_rotations([4, 5, 7, 9, 10, -1, 2]))
   print(count_rotations([1, 3, 8, 10]))
 
 main()

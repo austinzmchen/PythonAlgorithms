@@ -13,6 +13,18 @@ class Solution:
         return res
     
     
+    # also works
+    def maxSubArray(self, nums: list[int]) -> int:
+        import sys
+        curr_sum, res = 0, -sys.maxsize-1
+        
+        for n in nums:
+            curr_sum = max(n, curr_sum + n)
+            res = max(res, curr_sum)
+            
+        return res
+    
+    
     def maxSubArray2(self, nums: list[int]) -> int:
         def recur(i, must_pick: bool):
             if i >= len(nums):

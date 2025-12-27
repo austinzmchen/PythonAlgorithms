@@ -18,7 +18,7 @@ def min_meeting_rooms(meetings):
 
   min_rooms = 0
   for meeting in meetings:
-    while len(min_heap) > 0 and min_heap[0].end <= meeting.start:
+    while min_heap and min_heap[0].end <= meeting.start:
       heappop(min_heap)
 
     heappush(min_heap, meeting)

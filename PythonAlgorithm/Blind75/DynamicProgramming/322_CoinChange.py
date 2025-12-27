@@ -29,7 +29,7 @@ from functools import lru_cache
 
 class Solution322:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        coins.sort(reverse=True)
+        coins.sort(reverse=True) # optimization, bigger coins at the end
         
         @lru_cache(maxsize=None)
         def recur(idx, count, _sum):
@@ -37,6 +37,8 @@ class Solution322:
                 return math.inf
             if _sum == 0:
                 return count
+            
+            # either select current, or skip
             return min(recur(idx, count+1, _sum-coins[idx]),
                        recur(idx+1, count, _sum))
 

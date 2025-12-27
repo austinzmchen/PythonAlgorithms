@@ -68,10 +68,10 @@ def find_order(words):
       char2 = curr_word[j]
       
       if char1 != char2:
-        adj_dict.setdefault(char1, []).append(char2)
-        
         in_degrees.setdefault(char1, 0)
-        in_degrees[char2] = in_degrees.setdefault(char2, 0) + 1
+        in_degrees[char2] = in_degrees.get(char2, 0) + 1
+        
+        adj_dict.setdefault(char1, []).append(char2)
         break
 
   queue = deque()
@@ -81,7 +81,7 @@ def find_order(words):
 
   while queue:
     size = len(queue)
-    for i in range(size):
+    for _ in range(size):
       vert = queue.popleft()
       sorted_order.append(vert)
 
