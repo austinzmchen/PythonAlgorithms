@@ -7,25 +7,32 @@
 
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        count, result = 0, -1
+        count, res = 0, -1
+        
         def recur(node):
             if not node:
                 return
+            
+            nonlocal count, res
+            
             recur(node.left)
-            nonlocal count, result
             count += 1
             if count == k:
-                result = node.val
+                res = node.val
                 return
             recur(node.right)
-        #
+
         recur(root)
-        return result
+        return res
+    
       
-# Follow up: If the BST is modified often (i.e., we can do insert and delete operations) and you need # to find the kth smallest frequently, how would you optimize?
-#
-#  check the new value is bigger or smaller than the top of the max_heap, and decide to add
-#
+"""
+Follow up: If the BST is modified often (i.e., we can do insert and delete operations) and 
+    you need to find the kth smallest frequently, how would you optimize?
+
+    Check the new value is bigger or smaller than the top of the max_heap, and decide to add
+"""  
+
 class Solution:
     def __init__(self):
         self.max_heap = [] # of size k
@@ -34,10 +41,11 @@ class Solution:
         def recur(node):
             if not node:
                 return
+            
             recur(node.left)
             if len(self.max_heap) < k:
                 heappush(self.max_heap, -node.val)
             recur(node.right)
-        #
+
         recur(root)
         return -self.max_heap[0]

@@ -1,3 +1,41 @@
+# 323. Number of Connected Components in an Undirected Graph
+# Problem Description
+# Given n nodes labeled from 0 to n-1 and a list of undirected edges (where each edge is a pair of nodes), write a function to find the number of connected components in the graph.
+# A connected component is a group of nodes where you can reach any node from any other node in that group through the edges.
+
+# Example 1
+# n = 5
+# edges = [[0,1], [1,2], [3,4]]
+# Output: 2
+# Component 1: {0, 1, 2}
+# Component 2: {3, 4}
+#
+# Visual:
+# 0---1---2    3---4
+
+# Example 2
+# n = 5
+# edges = [[0,1], [1,2], [2,3], [3,4]]
+# Output: 1
+# All nodes connected in one component
+#
+# Visual:
+# 0---1---2---3---4
+
+# Example 3
+# n = 4
+# edges = []
+# Output: 4
+# Each node is its own component: {0}, {1}, {2}, {3}
+
+# Example 4
+# n = 6
+# edges = [[0,1], [1,2], [3,4]]
+# Output: 3
+# Component 1: {0, 1, 2}
+# Component 2: {3, 4}
+# Component 3: {5}
+
 
 class Solution323:
   
@@ -8,21 +46,23 @@ class Solution323:
       adj_dict[e[0]].append(e[1])
       adj_dict[e[1]].append(e[0])
       
-    def dfs(n, visited):
-      if n in visited:
-        return
-      #
-      visited.add(n)
-      for adj in adj_dict[n]:
-        dfs(adj, visited)
-    
     count = 0
     visited = set()
+    
+    def dfs(n):
+      if n in visited:
+        return
+      visited.add(n)
+      
+      for adj in adj_dict.get(n, []):
+        dfs(adj)
+    
     for i in range(n):
       if i not in visited:
         count += 1
-      dfs(i, visited)
-    #
+        
+      dfs(i)
+
     return count
   
   

@@ -2,6 +2,7 @@ from functools import lru_cache
 
 class Solution91:
     def numDecodings(self, s: str) -> int:
+      
       @lru_cache(maxsize=None)
       def recur(i):
         if i >= len(s):
@@ -16,6 +17,28 @@ class Solution91:
           r += recur(i+2) 
         #
         return r   
+      
+      return recur(0)
+  
+  
+    def numDecodings(self, s: str) -> int:
+      chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      char_dict = {}
+
+      for i, char in enumerate(chars):
+          char_dict[str(i+1)] = char
+      
+      def recur(idx):
+          if idx == len(s):
+              return 1
+          
+          count = 0
+          for j in range(idx, len(s) + 1):
+              w = s[idx:j]
+              if w in char_dict:
+                  count += recur(j)
+          
+          return count
       
       return recur(0)
     

@@ -19,7 +19,7 @@ class WordDictionary:
             if c not in root.map:
                 root.map[c] = Node(c)
             root = root.map[c]
-        #
+
         root.is_end = True
 
         
@@ -28,18 +28,18 @@ class WordDictionary:
         def recur(node, idx) -> bool:
             if idx >= len(word):
                 return node.is_end
-            #
+
             c = word[idx]
             if c == '.':
                 for child_n in node.map.values():
-                    if recur(child_n, idx+1):
+                    if recur(child_n, idx + 1):
                       return True
                 return False
-            #
+
             if c in node.map:
-                return recur(node.map[c], idx+1)
+                return recur(node.map[c], idx + 1)
             return False
-        #
+
         return recur(self.root, 0)
         
         

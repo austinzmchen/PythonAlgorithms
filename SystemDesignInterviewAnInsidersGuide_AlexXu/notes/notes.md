@@ -16,6 +16,34 @@ Good questions to ask
 - relational database naturally enforce atomicity, good for strong consistency.
 - no-relational has low latency, easier for replication/sharding, good for strong availability
 
+### Relational databases:
+
+Pros:
+- You need structured data with clear relationships
+- ACID transactions are important (e.g., financial applications)
+- You need to perform complex join operations across tables
+- Data model and format are known in advance (having a schema)
+
+Cons:
+- They are difficult to scale horizontally due to their relational nature (hard to partition due to all the foreign key references)
+- They require up-front design, and changes are harder (requiring data migrations and possibly downtime)
+- Not effective for storing and querying unstructured data
+- Relational databases do not handle long tail of data well - when indexes grow large, random access is expensive
+
+
+### NoSQL:
+
+Pros:
+- easy horizontal scaling and low latency to access
+- Flexible schema that enables faster development
+- Better suited for massive amounts of data
+  
+Cons:
+- Join operations are generally not supported
+- only eventual consistency achieved
+- Larger data storage footprint due to more data duplication from lack of normalization (not good for mobile app)
+
+
 ## Sharding
 
 - large database into smaller parts (part of user data by userId)
