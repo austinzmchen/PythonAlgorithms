@@ -1,14 +1,14 @@
-from functools import lru_cache
 
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        @lru_cache(None)
-        def recur(idx):
-            if idx >= len(cost):
+        from functools import lru_cache
+        
+        @lru_cache
+        def recur(i):
+            if i >= len(cost):
                 return 0
-            return min(cost[idx] + recur(idx+1),
-                    cost[idx] + recur(idx+2))
-        #
+            return min(cost[i] + recur(i + 1), cost[i] + recur(i + 2))
+
         return min(recur(0), recur(1))
         
         

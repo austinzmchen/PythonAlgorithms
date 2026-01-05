@@ -5,5 +5,7 @@ class Solution:
         
         for p in prices:
             low = min(low, p)
-            max_profit = max(max_profit, p-low)
+            max_profit = max(max_profit, p - low)
+            
         return max_profit
+    

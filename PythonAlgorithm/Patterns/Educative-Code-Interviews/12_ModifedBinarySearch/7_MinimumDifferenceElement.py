@@ -9,8 +9,9 @@ def search_min_diff_element(arr, key):
     if arr[mid] == key:
       return arr[mid]
     
-    if abs(arr[mid] - key) < min:
-      min = abs(arr[mid] - key)
+    diff = abs(arr[mid] - key)
+    if diff < min:
+      min = diff
       res = arr[mid]
 
     if key < arr[mid]:

@@ -31,6 +31,16 @@ Cons:
 - Relational databases do not handle long tail of data well - when indexes grow large, random access is expensive
 
 
+### ACID
+
+- Atomic: updates all or nothing
+- Consistency: going from 1 valid state to another valid state
+- Isolation: concurrent transaction do not interfere with each other (when no conflict)
+- Durability: once commited, permanently saved (even power failure)
+  
+- Relational database, mongoDb, redis transaction, Apache Kafka (You can write to multiple topics atomically)
+
+
 ### NoSQL:
 
 Pros:

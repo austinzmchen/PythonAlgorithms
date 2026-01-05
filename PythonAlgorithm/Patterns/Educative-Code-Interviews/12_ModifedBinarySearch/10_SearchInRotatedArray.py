@@ -1,5 +1,5 @@
 # Problem Statement
-# Given a sorted array that has been rotated at some pivot point, find the index of a target value. The array was originally sorted in ascending order, then rotated.What is rotation?
+# Given a sorted array that has been rotated at some pivot point, find the index of a target value. The array was originally sorted in ascending order, then rotated.
 
 # Original: [0, 1, 2, 4, 5, 6, 7]
 # Rotated at index 4: [4, 5, 6, 7, 0, 1, 2]

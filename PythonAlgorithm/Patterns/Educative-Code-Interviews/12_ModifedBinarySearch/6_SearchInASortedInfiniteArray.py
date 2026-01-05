@@ -9,7 +9,6 @@
 import math
 
 class ArrayReader:
-
   def __init__(self, arr):
     self.arr = arr
 
@@ -29,7 +28,7 @@ def search_in_infinite_array(reader, key):
   
   l, r = 0, end_idx
   while l <= r:
-    mid = l + (r - l) // 2
+    mid = (l + r) // 2
     if reader.get(mid) == key:
       return mid
     

@@ -25,6 +25,7 @@ def search_bitonic_array(arr, key):
 # copied from the first question
 def order_argnostic_binary_search(arr, key, start_idx, end_idx):
   l, r = start_idx, end_idx
+  
   while l <= r:
     mid = r + (l - r) // 2
     if arr[mid] == key:
@@ -43,6 +44,60 @@ def order_argnostic_binary_search(arr, key, start_idx, end_idx):
   return -1
 
 
+# 1. find the peak index
+# 2. search asc
+# 3, search desc
+
+def search_bitonic_array(arr, key):
+  l, r = 0, len(arr) - 1
+  
+  # find the peak index first
+  while l < r:
+    mid = (l + r) // 2
+    if arr[mid] == key:
+      return mid
+    
+    if arr[mid] < arr[mid + 1]:
+      l = mid + 1
+    
+    else:
+      r = mid
+  
+  peak_i = l
+  
+  def find_asc(key, start, end):
+    while start <= end:
+      m = (start + end) // 2
+      if arr[m] == key:
+        return m
+      
+      if key < arr[m]:
+        end = m - 1
+      else:
+        start = m + 1
+    return None
+  
+  def find_desc(key, start, end):
+    while start <= end:
+      m = (start + end) // 2
+      if arr[m] == key:
+        return m
+      
+      if key < arr[m]:
+        start = m + 1
+      else:
+        end = m - 1
+    return None
+  
+  if (i := find_asc(key, 0, peak_i)) is not None:
+    return i
+  
+  if (i := find_desc(key, peak_i, len(arr) - 1)) is not None:
+    return i
+  
+  return -1
+  
+  
 def main():
   print(search_bitonic_array([1, 3, 8, 4, 3], 4))
   print(search_bitonic_array([3, 8, 3, 1], 8))

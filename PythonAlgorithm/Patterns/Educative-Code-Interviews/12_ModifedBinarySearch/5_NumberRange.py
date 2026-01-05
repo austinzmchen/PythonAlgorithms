@@ -4,6 +4,7 @@ def find_range(arr, key):
   
   while l <= r:
     mid = r + (l - r) // 2
+    
     if arr[mid] == key:
       # need to find all same
       start, end = mid, mid

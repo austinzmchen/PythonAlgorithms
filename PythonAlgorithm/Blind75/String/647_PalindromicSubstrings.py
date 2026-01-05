@@ -5,7 +5,7 @@ class Solution:
     def countSubstrings(self, s: str) -> int:
         res = set()
         
-        @lru_cache(maxsize=None)
+        @lru_cache
         def recur(l, r) -> int:
             """ returns longest palindrom substring """
             if l > r:
@@ -14,16 +14,14 @@ class Solution:
                 res.add((l, r))
                 return 1
 
-            _len = 0
-            
+            c = 0
             if s[l] == s[r]:
-                v = recur(l + 1, r - 1)
-                if v + 2 == r - l + 1:
+                c = recur(l + 1, r - 1) + 2
+                if c == r - l + 1:
                     res.add((l, r))
-                    _len = v + 2
 
             return max(
-                _len, 
+                c, 
                 recur(l + 1, r),
                 recur(l, r - 1)
             )
