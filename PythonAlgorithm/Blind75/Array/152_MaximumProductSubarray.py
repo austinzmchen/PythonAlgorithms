@@ -40,4 +40,27 @@ class Solution:
             res = max(res, curr)
         return res
     
+    
+    # TLE
+    def maxProduct(self, nums: List[int]) -> int:
+        if not nums: return 0
+        from functools import lru_cache
+
+        @lru_cache
+        def recur(i, curr):
+            if i >= len(nums):
+                return curr
+
+            # - discount this, 
+            # - count this and continue
+            # - start with this and continue
+            return max(
+                curr,
+                recur(i + 1, curr * nums[i]),
+                recur(i + 1, nums[i]),
+            )
+
+        return recur(1, nums[0])
+    
+    
 print(Solution().maxProduct([-2,3,-4]))

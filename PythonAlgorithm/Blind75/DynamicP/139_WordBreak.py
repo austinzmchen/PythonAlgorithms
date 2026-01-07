@@ -1,4 +1,3 @@
-from functools import lru_cache
 from typing import List
 
 class Solution:
@@ -6,17 +5,17 @@ class Solution:
         from functools import lru_cache
 
         @lru_cache
-        def recur(idx):
+        def recur(i):
             # if not all words match, idx would be stuck before the end of list
-            if idx >= len(s):
+            if i >= len(s):
                 return True
             
-            for i in range(idx + 1, len(s) + 1):
-                w = s[idx: i]
+            found = False
+            for j in range(i + 1, len(s) + 1):
+                w = s[i: j]
 
                 if w in wordDict:
-                    if recur(i): # i is not in previous word
-                        return True
-            return False
+                    found = found or recur(j)
+            return found
 
         return recur(0)

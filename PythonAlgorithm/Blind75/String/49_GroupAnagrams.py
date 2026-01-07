@@ -17,7 +17,7 @@ class Solution:
         _dict = {}
 
         for s in strs:
-            ss = str(sorted(s))
+            ss = "".join(sorted(s))
             _dict.setdefault(ss, []).append(s)
         
         return [list(v) for v in _dict.values()]     
