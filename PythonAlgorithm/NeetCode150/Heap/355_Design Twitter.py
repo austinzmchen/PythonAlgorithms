@@ -3,7 +3,7 @@ class Twitter:
     def __init__(self):
         self.inc = 1
         self.f_dict: [int, [int]] = {}
-        self.tweet_by_user: [int, tuple] = {}
+        self.tweet_by_user: [int, list[tuple]] = {}
 
 
     def postTweet(self, userId: int, tweetId: int) -> None:
@@ -21,6 +21,25 @@ class Twitter:
         tuples = sorted(tuples, reverse=True)
         return [t[1] for t in tuples[:10]]
 
+    # use heap
+    def getNewsFeed2(self, userId: int) -> List[int]:
+        from heapq import heappush, heappop
+        max_heap = []
+        
+        for t in self.tweet_by_user.get(userId, []):
+            heappush(max_heap, (-t[0], t[1]))
+        
+        for followee_id in self.f_dict.get(userId, []):
+            for t in self.tweet_by_user.get(followee_id, []):
+                heappush(max_heap, (-t[0], t[1]))
+        
+        res = []
+        for _ in range(min(10, len(max_heap))):
+            _, tweet_id = heappop(max_heap)
+            res.append(tweet_id)
+            
+        return res
+    
 
     def follow(self, followerId: int, followeeId: int) -> None:
         self.f_dict.setdefault(followerId, [])

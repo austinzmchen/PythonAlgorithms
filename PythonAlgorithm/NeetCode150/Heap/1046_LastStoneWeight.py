@@ -11,7 +11,7 @@ class Solution:
             b = heappop(max_heap)
 
             new = abs((-a) - (-b))
-            if new  > 0:
+            if new > 0:
                 heappush(max_heap, -new)
         
         return -max_heap[0] if max_heap else 0

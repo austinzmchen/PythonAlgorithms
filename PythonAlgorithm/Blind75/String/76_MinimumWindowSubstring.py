@@ -1,42 +1,46 @@
-from collections import defaultdict
-
 
 class Solution76:
-    def minWindow_1(self, s: str, t: str) -> str:
-        _dict = defaultdict(int)
-        for c in t:
-            _dict[c] += 1
-        c_count = len(_dict)
-        #
-        l, r = 0, 0
+    def minWindow(self, s: str, t: str) -> str:
         import sys
-        start, _len = -1, sys.maxsize
-        while r < len(s):
-            if s[r] in _dict:
-                _dict[s[r]] -= 1
-                if _dict[s[r]] == 0:
-                    c_count -= 1
-            #
-            while l < len(s) and c_count == 0:
-                if s[l] in _dict:
-                    if _dict[s[l]] == 0:
-                        c_count += 1
-                    _dict[s[l]] += 1
-                #
-                if r-l+1 < _len:
-                    start = l 
-                    _len = r-l+1
-                #
+        _dict = {}
+        count = 0
+        _min = sys.maxsize
+        i_min = -1
+
+        for c in t:
+            if _dict.get(c, 0) == 0:
+                count += 1
+            _dict[c] = _dict.get(c, 0) + 1
+
+        l = 0
+        for r, c in enumerate(s):
+            if c in _dict:
+                _dict[c] -= 1
+                if _dict[c] == 0:
+                    count -= 1
+
+            while count == 0 and l <= r:
+                lc = s[l]
+                if lc in _dict:
+                    if _dict[lc] == 0:
+                        count += 1
+                    _dict[lc] += 1
+
+                if r - l + 1 < _min:
+                    _min = r - l + 1
+                    i_min = l
+
                 l += 1
-            #
-            r += 1
-        #
-        return s[start:start+_len] if start != -1 else ""
-         
-    
+
+        if i_min == -1:
+            return ""
+        else:
+            return s[i_min: i_min + _min]
+        
+        
     # two pointers, sliding window
     # NO WORKING !!
-    def minWindow(self, s: str, t: str) -> str:
+    def minWindow0(self, s: str, t: str) -> str:
         _dict = {}
         for c in t:
             _dict[c] = _dict.get(c, 0) + 1
@@ -66,5 +70,6 @@ class Solution76:
         return res
     
 
-print(Solution76().minWindow("ADOBECODEBANC", "ABC"))
-# print(Solution76().minWindow('aa', 'aa'))
+# print(Solution76().minWindow("ADOBECODEBANC", "ABC"))
+# print(Solution76().minWindow('a', 'aa'))
+print(Solution76().minWindow('a', 'a'))

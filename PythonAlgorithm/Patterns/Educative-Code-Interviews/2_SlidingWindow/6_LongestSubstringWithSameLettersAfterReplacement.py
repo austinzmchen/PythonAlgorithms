@@ -19,39 +19,53 @@
 # Output: 3
 # Explanation: Replace the 'b' or 'd' with 'c' to have the longest repeating substring "ccc".
 
-#  */
- 
-from typing import DefaultDict
-
-
 def length_of_longest_substring(str, k):
   res = 0
-  win_start = 0
   repeat_char_count = 0
-  _dict = DefaultDict(int)
-
-  for win_e, v in enumerate(str):
-    _dict[v] += 1
-    repeat_char_count = max(repeat_char_count, _dict[v])
+  _dict = {}
+  
+  l = 0
+  for r, c in enumerate(str):
+    _dict[c] = _dict.get(c, 0) + 1
+    repeat_char_count = max(repeat_char_count, _dict[c])
 
     # while k chars not enough to replace the other chars
-    while win_e - win_start + 1 - repeat_char_count > k:
-      char_s = str[win_start]
-      _dict[char_s] -= 1
-      win_start += 1
-      
+    while repeat_char_count + k < r - l + 1:
+      _dict[str[l]] -= 1
+      l += 1
       # We don't need to decrease repeat_char_count when shrinking because we only care about finding a window that's LONGER than our current best.
-      repeat_char_count = max(repeat_char_count, _dict.values())
 
-    res = max(res, win_e - win_start + 1)
-
+    res = max(res, r - l + 1)
   return res
+
+
+def length_of_longest_substring(s, k):
+    res = 0
+
+    _dict = {}
+    l = 0
+    curr_max = 0 # max repeating chars count
+
+    for r, c in enumerate(s):
+        _dict[c] = _dict.get(c, 0) + 1
+        # update curr max
+        curr_max = max(curr_max, _dict[c])
+
+        while curr_max + k < r - l + 1:
+            _dict[s[l]] -= 1
+            
+            l += 1
+            # update curr max
+            curr_max = max(_dict.values())
+
+        res = max(res, r - l + 1)
+
+    return res
 
 
 def main():
   print(length_of_longest_substring("aabccbb", 2))
   print(length_of_longest_substring("abbcb", 1))
   print(length_of_longest_substring("abccde", 1))
-
 
 main()

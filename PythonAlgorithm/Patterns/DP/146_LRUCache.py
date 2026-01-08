@@ -1,34 +1,31 @@
-# dictionary in python 3.7+ is ordered
-class LRUCache:
 
+class LRUCache:
+    # dictionary in python 3.7+ is ordered
     def __init__(self, capacity: int):
         self.cap = capacity
-        self.size = 0
         self._dict = {}
 
     def get(self, key: int) -> int:
         if key not in self._dict:
             return -1
-        #
-        value = self._dict.pop(key)
-        self._dict[key] = value
-        return value
+
+        v = self._dict.pop(key)
+        self._dict[key] = v
+        return v
         
     def put(self, key: int, value: int) -> None:
         if key in self._dict:
             self._dict.pop(key)
             self._dict[key] = value
             return
-        #
-        if self.size < self.cap:
-            self.size += 1
-        else:
-            head_key = list(self._dict.keys())[0]
-            del self._dict[head_key]
-        #
-        self._dict[key] = value
-            
 
+        if len(self._dict) < self.cap:
+            self._dict[key] = value
+        else:
+            k = next(iter(self._dict.keys()))
+            self._dict.pop(k)
+            self._dict[key] = value
+            
 
 class LRUCache2:
 
@@ -101,8 +98,25 @@ class Node:
         self.next = None
         self.key = key
         self.val = val
-    
-# Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)
+
+
+# lru0 = LRUCache(2)
+# lru0.put(1, 1); # cache is {1=1}
+# lru0.put(2, 2); # cache is {1=1, 2=2}
+# lru0.get(1);    # return 1
+# lru0.put(3, 3); # LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+# lru0.get(2);    # returns -1 (not found)
+# lru0.put(4, 4); # LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+# lru0.get(1);    # return -1 (not found)
+# lru0.get(3);    # return 3
+# lru0.get(4);    # return 4
+
+
+lRUCache = LRUCache(2)
+lRUCache.get(2)
+lRUCache.put(2, 6)
+lRUCache.get(1)
+lRUCache.put(1, 5)
+lRUCache.put(1, 2)
+lRUCache.get(1)
+lRUCache.get(2)

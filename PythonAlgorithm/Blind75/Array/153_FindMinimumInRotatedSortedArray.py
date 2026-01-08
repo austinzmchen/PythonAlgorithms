@@ -25,12 +25,13 @@ class Solution153:
         l, r = 0, len(nums) - 1
 
         while l <= r:
-
             mid = (l + r) // 2
-            if (mid - 1) >= 0 and nums[mid-1] > nums[mid]:
+            if (mid - 1) >= 0 and nums[mid - 1] > nums[mid]:
                 return nums[mid]
             
             if nums[mid] < nums[r]:
+                # if right half is increasing
+                # the the min num is at the left half
                 r = mid
             else:
                 l = mid + 1
