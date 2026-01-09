@@ -5,26 +5,7 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    
-    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        def isSame(a, b):
-            if not a or not b:
-                return a == b
-            
-            return a.val == b.val and \
-                isSame(a.left, b.left) and \
-                isSame(a.right, b.right)
-
-        if not subRoot:
-            return True
-        if not root:
-            return False
         
-        return isSame(root, subRoot) or \
-                self.isSubtree(root.left, subRoot) or \
-                self.isSubtree(root.right, subRoot)
-                
-    
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
         def equal(node, node2):
             if node is None and node2 is None:
@@ -45,3 +26,21 @@ class Solution:
                     recur(node.right)
         
         return recur(root)
+    
+    
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def same(a, b):
+            if not a or not b:
+                return a == b
+            
+            return a.val == b.val and same(a.left, b.left) and same(a.right, b.right)
+
+        def recur(n1, n2):
+            if not n2:
+                return True
+            if not n1:
+                return False
+        
+            return same(n1, n2) or recur(n1.left, n2) or recur(n1.right, n2)
+        
+        return recur(root, subRoot)

@@ -17,7 +17,6 @@ class Solution:
         while r:
             if i == k:
                 next = r.next
-                old_start = l.next
                 new_start, new_end = reverse(l.next, r)
 
                 l.next = new_start

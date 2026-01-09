@@ -29,14 +29,12 @@ class Solution:
         curr = dummy
         
         while min_heap:
-            value, i, node = heappop(min_heap)
-            curr.next = ListNode(value)
+            val, i, node = heappop(min_heap)
+            curr.next = ListNode(val)
             
-            node = node.next
-            if node:
+            if node := node.next:
                 heappush(min_heap, (node.val, i, node))
             curr = curr.next
-
         return dummy.next
       
       

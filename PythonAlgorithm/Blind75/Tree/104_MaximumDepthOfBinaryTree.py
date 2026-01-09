@@ -4,12 +4,15 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         def recur(node, depth):
             if not node:
                 return depth
-            return max(recur(node.left, depth+1),
-                        recur(node.right, depth+1))
+            
+            return max(recur(node.left, depth + 1),
+                       recur(node.right, depth + 1))
 
         return recur(root, 0)
+    

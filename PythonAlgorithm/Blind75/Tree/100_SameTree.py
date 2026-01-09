@@ -4,11 +4,15 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        if not p or not q:
-            return p == q
-        #
-        return p.val == q.val and \
-            self.isSameTree(p.left, q.left) and \
-            self.isSameTree(p.right, q.right)
+        def recur(node1, node2):
+            if not node1 or not node2:
+                return node1 == node2
+            if node1.val != node2.val:
+                return False
+            
+            return recur(node1.left, node2.left) and \
+                    recur(node1.right, node2.right)
+        return recur(p, q)
