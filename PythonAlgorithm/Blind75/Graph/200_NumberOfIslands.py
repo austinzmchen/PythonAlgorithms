@@ -6,6 +6,7 @@ class Solution:
                 return
             if grid[x][y] == '0':
                 return
+            
             grid[x][y] = '0'
             recur(x-1, y)
             recur(x, y-1)

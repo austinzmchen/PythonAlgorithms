@@ -10,8 +10,8 @@ class Solution:
                 c = 1
             curr_max = max(curr_max, node.val)
 
-            l = recur(node.left, curr_max)
-            r = recur(node.right, curr_max)
-            return l + r + c
+            return c + \
+                recur(node.left, curr_max) + \
+                recur(node.right, curr_max)
         
         return recur(root, root.val)

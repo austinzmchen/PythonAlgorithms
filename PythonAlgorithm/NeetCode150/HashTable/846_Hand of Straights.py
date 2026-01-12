@@ -19,7 +19,7 @@ class Solution:
             
             # Need to form 'freq' groups starting with 'card'
             for i in range(groupSize):
-                if count[card + i] < freq:
+                if count.get(card + i, 0) < freq:
                     # Not enough cards to form the groups
                     return False
                 count[card + i] -= freq

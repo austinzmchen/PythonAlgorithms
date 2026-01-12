@@ -10,36 +10,12 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         res = None
 
-        def recur(root):
-            nonlocal res
-            if root == None:
-                return 0
-            
-            found = 0
-            found += recur(root.left)
-            found += recur(root.right)
-            
-            if root == p or root == q:
-                found += 1
-                
-            if found == 2:
-                res = root
-                return 0
-            return found
-        
-        recur(root)
-        return res
-    
-    
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        res = None
-
-        def post_order(node):
+        def recur(node):
             if not node:
                 return False
             
-            l = post_order(node.left)
-            r = post_order(node.right)
+            l = recur(node.left)
+            r = recur(node.right)
             
             nonlocal res
 
@@ -52,7 +28,7 @@ class Solution:
                     if not res:
                         res = node
             
-            return l or r or node.val == p.val or node.val == q.val
+            return l or r or (node.val == p.val or node.val == q.val)
         
-        post_order(root)
+        recur(root)
         return res

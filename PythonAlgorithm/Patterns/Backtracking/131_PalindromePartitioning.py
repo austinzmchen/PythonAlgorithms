@@ -1,26 +1,33 @@
 
 class Solution:
     
+    # need to traverse char by char and check if intervals of chars are palindrom
     def partition(self, s):
         res = []
-        #  
-        def dfs(idx, path):
-            if idx == len(s):
-                res.append(path)
-                return
-            for i in range(idx, len(s)):
-                if isPal(idx, i):
-                    dfs(i+1, path+[s[idx:i+1]])
         
-        def isPal(l, r):
+        def is_pal(l, r):
             while l < r:
                 if s[l] != s[r]:
                     return False
                 l += 1
                 r -= 1
             return True
+        
+        def recur(i, path):
+            # When we've processed the entire string, we've found a valid partition.
+            if i == len(s):
+                res.append(path)
+                return
             
-        dfs(0, [])
+            # - Try every possible end position `j` starting from `i`
+            # - If `s[i:j+1]` is a palindrome, add it to the path
+            # - Recursively partition the remaining substring starting at `j+1`
+            for j in range(i, len(s)):
+                if is_pal(i, j):
+                    ss = s[i:j+1]
+                    recur(j + 1, path + [ss])
+            
+        recur(0, [])
         return res
     
     

@@ -1,44 +1,42 @@
-from functools import cache
-
 class Node:
     def __init__(self, value, is_end=False):
         self.val = value
-        self.map = {}
+        self.children = {}
         self.is_end = is_end
         
         
 class WordDictionary:
-
     def __init__(self):
         self.root = Node(None)
         
-
     def addWord(self, word: str) -> None:
-        root = self.root
+        node = self.root
         for c in word:
-            if c not in root.map:
-                root.map[c] = Node(c)
-            root = root.map[c]
+            if c not in node.children:
+                node.children[c] = Node(c)
+            node = node.children[c]
 
-        root.is_end = True
+        node.is_end = True
 
         
     def search(self, word: str) -> bool:
-        @cache
-        def recur(node, idx) -> bool:
-            if idx >= len(word):
+        from functools import lru_cache
+        
+        @lru_cache
+        def recur(node, i) -> bool:
+            if i >= len(word):
                 return node.is_end
 
-            c = word[idx]
-            if c == '.':
-                for child_n in node.map.values():
-                    if recur(child_n, idx + 1):
-                      return True
-                return False
-
-            if c in node.map:
-                return recur(node.map[c], idx + 1)
-            return False
+            c = word[i]
+            if c != '.':
+                if c not in node.children:
+                    return False
+                return recur(node.children[c], i + 1)
+            
+            found = False                
+            for cn in node.children.values():
+                found = found or recur(cn, i + 1)
+            return found
 
         return recur(self.root, 0)
         

@@ -17,39 +17,31 @@ class Solution:
             return 0
         minute = 0
 
-        def check_rot(r, c):
+        def recur(r, c):
             if r < 0 or c < 0 or r >= len(grid) or c >= len(grid[r]):
-                return None
-            if grid[r][c] == 1:
-                return True
-            return False
+                return
+            if grid[r][c] != 1:
+                return
+            
+            nonlocal fresh_count
+            rotten_q.append((r, c))
+            grid[r][c] = 2
+            fresh_count -= 1
+            return
 
         while rotten_q:
             size = len(rotten_q)
             for _ in range(size):
                 r, c = rotten_q.popleft()
-
-                if check_rot(r - 1, c):
-                    rotten_q.append((r - 1, c))
-                    grid[r - 1][c] = 2
-                    fresh_count -= 1
+                recur(r - 1, c)
+                recur(r + 1, c)
+                recur(r, c + 1)
+                recur(r, c - 1)
                 
-                if check_rot(r + 1, c):
-                    rotten_q.append((r + 1, c))
-                    grid[r + 1][c] = 2
-                    fresh_count -= 1
-                
-                if check_rot(r, c + 1):
-                    rotten_q.append((r, c + 1))
-                    grid[r][c + 1] = 2
-                    fresh_count -= 1
-
-                if check_rot(r, c - 1):
-                    rotten_q.append((r, c - 1))
-                    grid[r][c - 1] = 2
-                    fresh_count -= 1
-
             minute += 1
 
         # some orange never rot
         return -1 if fresh_count != 0 else minute - 1
+    
+
+print(Solution().orangesRotting(grid = [[2,1,1],[1,1,0],[0,1,1]]))

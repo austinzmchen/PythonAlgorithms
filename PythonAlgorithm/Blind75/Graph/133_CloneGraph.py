@@ -7,7 +7,7 @@ class Node:
         self.neighbors = neighbors if neighbors is not None else []
         
 
-class Solution1:
+class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
         if not node: return None
 
@@ -37,26 +37,54 @@ class Solution1:
 
         return _map[node]
       
-
-class Solution:
+      
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        _dict = {}
+        node_dict = {}
 
-        def recur(node):
-            if not node:
+        def recur(new_node):
+            if not new_node:
                 return None
-            if cached_node := _dict.get(node.val):
-                return cached_node
+            if n := node_dict.get(new_node.val):
+                return n
             
-            curr = Node(node.val, [])
-            _dict[curr.val] = curr
+            new_node = Node(new_node.val, [])
+            node_dict[new_node.val] = new_node
 
-            for n in node.neighbors:
-                nn = recur(n)
-                curr.neighbors.append(nn)
+            for nb in node.neighbors:
+                new_nb = recur(nb)
+                new_node.neighbors.append(new_nb)
 
-            return curr
+            return new_node
+        
         return recur(node)
+    
+    
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        edges = {}
+
+        def recur(n):
+            if not n:
+                return
+
+            if n.val in edges:
+                return
+
+            for nb in n.neighbors:
+                edges.setdefault(n.val, set())
+                edges[n.val].add(nb.val)
+                recur(nb)
+        recur(node)
+
+        node_dict = {}
+        for v in edges.keys():
+            node_dict[v] = Node(v, [])
+
+        for v, _set in edges.items():
+            for nb_val in _set:
+                nb = node_dict[nb_val]
+                node_dict[v].neighbors.append(nb)
+
+        return node_dict[node.val]
     
     
 node1 = Node(1)

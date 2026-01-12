@@ -8,7 +8,7 @@ class Solution:
             for c in range(len(matrix[r])):
                 if matrix[r][c] == 0:
                     queue.append((r, c))
-        #
+
         while queue:
             r, c = queue.pop(0)
             for ri in range(len(matrix)):

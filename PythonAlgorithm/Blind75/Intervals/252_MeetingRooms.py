@@ -22,13 +22,15 @@
 
 class Solution_252:
     def canAttendMeetings(intervals: List) -> bool:
-        intervals.sort()
+        intervals.sort(key=lambda x: x[0])
         start, end = intervals[0]
 
         for i in range(1, len(intervals)):
             inv = intervals[i]
             
-            if inv[0] < end: # equal not okay?
+            if inv[0] < end:
                 return False
-            
+            else:
+                start, end = inv
+
         return True

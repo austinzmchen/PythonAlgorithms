@@ -1,27 +1,6 @@
 from typing import List
 
-class Solution:
-    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        merged = []
-        i = 0
-
-        while i < len(intervals) and intervals[i][1] < newInterval[0]:
-          merged.append(list(intervals[i]))
-          i += 1
-        
-        curr = list(newInterval)
-        for j in range(i, len(intervals)):
-          inv = intervals[j]
-          if inv[0] <= curr[1]:
-            curr = [min(curr[0], inv[0]), max(curr[1], inv[1])]
-          else:
-            merged.append(curr)
-            curr = list(inv)
-
-        merged.append(curr)
-        return merged
-    
-    
+class Solution:    
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         res = []
         i = 0
@@ -33,7 +12,7 @@ class Solution:
                 break
             i += 1
         
-        start, end = newInterval[0], newInterval[1]
+        start, end = newInterval
 
         for _, inv in enumerate(intervals[i:], start=i):
             if inv[0] <= end:
@@ -45,6 +24,27 @@ class Solution:
 
         res.append((start, end))
         return res
-      
+    
+    
+    # just include it in then sort and merge
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        intervals.append(newInterval)
+        intervals.sort(key=lambda x: x[0])
+
+        res = []
+        start, end = intervals[0]
+
+        for i in range(1, len(intervals)):
+            inv = intervals[i]
+            if inv[0] <= end:
+                start = min(start, inv[0])
+                end = max(end, inv[1])
+            else:
+                res.append([start, end])
+                start, end = inv
+        
+        res.append([start, end])
+        return res
+    
 
 print(Solution().insert([[1,5]], [6, 8]))

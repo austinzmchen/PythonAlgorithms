@@ -39,12 +39,12 @@
 #  */
  
 def find_permutations(nums):
-  perms = []
-  perms.append([])
+  perms = [[]]
   res = []
 
   for num in nums:
-    for i in range(len(perms)):
+    size = len(perms)
+    for i in range(size):
       # insert num at each idx, up to lens(nums) + 1
       for j in range(len(perms[i]) + 1): # +1 because insert before or after a num
         new_ls = list(perms[i])

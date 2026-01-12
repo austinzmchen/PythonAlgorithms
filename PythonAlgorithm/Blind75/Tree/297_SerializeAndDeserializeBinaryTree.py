@@ -6,6 +6,55 @@ class TreeNode(object):
         self.right = None
 
 
+class Codec:
+    """
+    use "#" in place of null
+    """
+    
+    def serialize(self, root):
+        def recur(node):
+            if not node:
+                res.append("#")
+                return
+            
+            res.append(str(node.val))
+            recur(node.left)
+            recur(node.right)
+
+        res = []
+        recur(root)
+        return ','.join(res)
+        
+
+    def deserialize(self, data):
+        ls = data.split(",")
+        i = 0
+
+        def recur():
+            nonlocal i
+            if i >= len(ls):
+                return None
+            
+            if ls[i] == "#":
+                i += 1
+                return None
+
+            node = TreeNode(int(ls[i]))
+            i += 1
+            
+            node.left = recur()
+            node.right = recur()
+            return node
+
+        return recur()
+ 
+ 
+print(Codec().deserialize("1,2,#,#,3,4,#,#,5,#,#"))
+
+codec = Codec()
+codec.serialize(codec.deserialize("1,2,#,#,3,4,#,#,5,#,#"))
+
+
 class Codec0:
     """ inspired by "105. Construct Binary Tree from Preorder and Inorder Traversal"
 
@@ -39,7 +88,7 @@ class Codec0:
             inorder(node.right)
         inorder(root)
 
-        print(f"{p_ls=}, {in_ls=}")
+        # print(f"{p_ls=}, {in_ls=}")
         return ",".join([str(n) for n in p_ls]) + ":" + ",".join([str(n) for n in in_ls])
         
 
@@ -83,55 +132,13 @@ print(Codec0().deserialize(":"))
 codec0 = Codec0()
 codec0.serialize(codec0.deserialize("3,9,20,15,7:9,3,15,20,7"))
 codec0.serialize(codec0.deserialize(":"))
-
-
-class Codec:
-
-    # use "#" in place of null
-    def serialize(self, root):
-        def recur(node):
-            if not node:
-                results.append("#")
-                return
-            results.append(str(node.val))
-            recur(node.left)
-            recur(node.right)
-
-        results = []
-        recur(root)
-        return ' '.join(results)
-        
-
-    def deserialize(self, data):
-        ls = data.split()
-        idx = 0
-
-        def recur():
-            nonlocal idx
-            if idx >= len(ls):
-                return None
-            if ls[idx] == "#":
-                idx += 1
-                return None
-
-            node = TreeNode(ls[idx])
-            idx += 1
-            
-            node.left = recur()
-            node.right = recur()
-            return node
-
-        return recur()
- 
- 
-print(Codec().deserialize("1 2 # # 3 4 # # 5 # #"))
-
-codec = Codec()
-codec.serialize(codec.deserialize("1 2 # # 3 4 # # 5 # #"))
       
       
 class Codec2:
-
+    """
+    BFS
+    """
+    
     def serialize(self, root):
         """Encodes a tree to a single string.
         
@@ -169,7 +176,7 @@ class Codec2:
         if len(queue) == 0:
             return None
         #
-        print(f"queue: {queue}")
+        # print(f"queue: {queue}")
         root = TreeNode(queue.pop(0))
         q = [root]
         while len(q) > 0:

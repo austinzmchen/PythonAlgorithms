@@ -7,26 +7,27 @@
 
 class Solution:
     
+    # - inorder array has left nodes on the left of the root, and right nodes on the right of the root, 
+    #       thus good for recurisive call with range (left & right)
+    #
+    # - Use preorder array to build the nodes
+    # - Use inorder array to see where to stop
+    
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        # inorder array has left nodes on the left of the root, 
-        # and right nodes on the right of the root, 
-        # thus good for recurisive call with range (left & right)
-        
-        _dict = {v:i for i,v in enumerate(inorder)}
-        p_i = 0
+        _dict = {n:i for i, n in enumerate(inorder)}
+        pi = 0
         
         def recur(l, r):
             if l > r:
                 return None
             
-            nonlocal p_i
-            v = preorder[p_i]
-            root = TreeNode(v)
-            p_i += 1
+            nonlocal pi
+            n = preorder[pi]
+            root = TreeNode(n)
+            pi += 1
             
-            root.left = recur(l, _dict[v] - 1)
-            root.right = recur(_dict[v] + 1, r)
+            root.left = recur(l, _dict[n] - 1)
+            root.right = recur(_dict[n] + 1, r)
             return root
 
         return recur(0, len(inorder) - 1)
-            

@@ -1,6 +1,5 @@
 from typing import List
 
-
 class Solution:
     
     # TLE
@@ -16,6 +15,7 @@ class Solution:
                 if curr_gas < 0:
                     break
                 
+                # move to next station and wrap around
                 j += 1
                 if j == len(gas):
                     j = 0
@@ -51,6 +51,32 @@ class Solution:
         
         return start
     
+    
+    # TLE
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        from functools import lru_cache
+        @lru_cache
+        def recur(idx, visited, curr_gas):
+            curr_gas = curr_gas - cost[idx]
+            if curr_gas < 0:
+                return False
+
+            if visited == len(gas):
+                return True
+            
+            j = idx + 1
+            if j > len(gas) - 1:
+                j = 0
+            
+            return recur(j, visited + 1, curr_gas + gas[j])
+        
+        for i, g in enumerate(gas):
+            if recur(i, 1, g):
+                return i
+        return -1
+    
 
 print(Solution().canCompleteCircuit([1,2,3,4,5], cost=[3,4,5,1,2]))
 print(Solution().canCompleteCircuit([4,0,1], cost=[3,2,1]))
+print(Solution().canCompleteCircuit([2,3,4], cost=[3,4,3]))
+print(Solution().canCompleteCircuit([4,5,3,1,4], cost=[5,4,3,4,2]))

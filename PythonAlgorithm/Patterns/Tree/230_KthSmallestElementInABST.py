@@ -6,6 +6,7 @@
 #         self.right = right
 
 class Solution:
+    # inorder traversal on BST goes from small to big
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         count, res = 0, -1
         
@@ -25,27 +26,23 @@ class Solution:
         recur(root)
         return res
     
-      
-"""
-Follow up: If the BST is modified often (i.e., we can do insert and delete operations) and 
-    you need to find the kth smallest frequently, how would you optimize?
 
-    Check the new value is bigger or smaller than the top of the max_heap, and decide to add
-"""  
-
-class Solution:
-    def __init__(self):
-        self.max_heap = [] # of size k
-    
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        from heapq import heappush, heappop
+        max_heap = []
+        
         def recur(node):
             if not node:
                 return
             
             recur(node.left)
-            if len(self.max_heap) < k:
-                heappush(self.max_heap, -node.val)
+            if len(max_heap) < k:
+                heappush(max_heap, -node.val)
+            else:
+                if node.val < -max_heap[0]:
+                   heappop(max_heap)
+                   heappush(max_heap, -node.val)
             recur(node.right)
 
         recur(root)
-        return -self.max_heap[0]
+        return -max_heap[0]

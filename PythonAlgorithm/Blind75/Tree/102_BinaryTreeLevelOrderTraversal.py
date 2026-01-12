@@ -9,17 +9,20 @@ class TreeNode:
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if root is None:
-            return None
+            return []
 
-        queue = [root]
+        from collections import deque
+        queue = deque()
+        queue.append(root)
         res = []
         
         while queue:
             level = []
             size = len(queue)
             for _ in range(size):
-                n = queue.pop(0)
+                n = queue.popleft()
                 level.append(n.val)
+                
                 if n.left:
                     queue.append(n.left)
                 if n.right:

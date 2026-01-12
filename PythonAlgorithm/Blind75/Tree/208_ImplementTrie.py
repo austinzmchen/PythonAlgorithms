@@ -1,61 +1,47 @@
-class Node1:
+class Node:
     def __init__(self, value, is_end=False):
         self.val = value
-        self.map = {}
+        self.children = {}
         self.is_end = is_end
         
         
-class Trie1:
-
+class Trie:
     def __init__(self):
-        self.root = Node1(None)
+        self.root = Node(None)
+
 
     def insert(self, word: str) -> None:
-        root = self.root
+        node = self.root
         for c in word:
-            if c not in root.map:
-                root.map[c] = Node1(c)
-            root = root.map[c]
+            if c not in node.children:
+                node.children[c] = Node(c)
+            node = node.children[c]
 
-        root.is_end = True
+        node.is_end = True
         
 
     def search(self, word: str) -> bool:
-        root = self.root
+        node = self.root
         for c in word:
-            if c not in root.map:
+            if c not in node.children:
                 return False
-            root = root.map[c]
-        #
-        return root.is_end
+            node = node.children[c]
+
+        return node.is_end
     
 
     def startsWith(self, prefix: str) -> bool:
-        root = self.root
+        node = self.root
         for c in prefix:
-            if c not in root.map:
+            if c not in node.children:
                 return False
-            root = root.map[c]
-        #
+            node = node.children[c]
+
+        # return not node.is_end
         return True
 
 
-# Your Trie object will be instantiated and called as such:
-# obj = Trie()
-# obj.insert(word)
-# param_2 = obj.search(word)
-# param_3 = obj.startsWith(prefix)
-
-
-class Node:
-    def __init__(self, val=""):
-        # self.val = val # this impl does not seem to need val
-        self.children = {}
-        self.is_end = False
-
-
-class Trie:
-
+class Trie1:
     def __init__(self):
         self.root = Node("")
         

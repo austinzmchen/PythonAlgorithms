@@ -39,24 +39,24 @@ class Solution79:
         from functools import lru_cache
         
         @lru_cache
-        def recur(row, col, word_idx):
+        def recur(r, c, word_idx):
             if word_idx >= len(word):
                 return True
-            if row < 0 or col < 0 or row >= len(board) or col >= len(board[row]):
+            if r < 0 or c < 0 or r >= len(board) or c >= len(board[r]):
                 return False
-            if word[word_idx] != board[row][col]:
+            if word[word_idx] != board[r][c]:
                 return False
             
             # must have, because you can not use the same char twice
-            tmp = board[row][col] 
-            board[row][col] = ""
+            tmp = board[r][c] 
+            board[r][c] = ""
             
-            result = recur(row-1, col, word_idx + 1) or \
-                    recur(row+1, col, word_idx + 1) or \
-                    recur(row, col-1, word_idx + 1) or \
-                    recur(row, col+1, word_idx + 1)
+            result = recur(r-1, c, word_idx + 1) or \
+                    recur(r+1, c, word_idx + 1) or \
+                    recur(r, c-1, word_idx + 1) or \
+                    recur(r, c+1, word_idx + 1)
             
-            board[row][col] = tmp
+            board[r][c] = tmp
             return result
 
         for r, row in enumerate(board):
@@ -65,6 +65,38 @@ class Solution79:
         
         return res
 
+
+    # Not working, why?
+    def exist(self, board: list[list[str]], word: str) -> bool:
+        from functools import lru_cache
+        
+        @lru_cache
+        def recur(r, c, path):
+            if r < 0 or c < 0 or r >= len(board) or c >= len(board[r]):
+                return False
+            if board[r][c] == "#":
+                return False
+            
+            cell = board[r][c] 
+            path += cell
+            if path == word:
+                return True
+            
+            board[r][c] = "#"
+            found = recur(r - 1, c, path) or \
+                    recur(r + 1, c, path) or \
+                    recur(r, c - 1, path) or \
+                    recur(r, c + 1, path)
+            
+            board[r][c] = cell
+            return found
+
+        for r, row in enumerate(board):
+            for c, cell in enumerate(row):
+                if recur(r, c, ""):
+                    return True
+        return False
+    
 
 # print(Solution79().exist([["A","B","C","E"],
 #                           ["S","F","C","S"],

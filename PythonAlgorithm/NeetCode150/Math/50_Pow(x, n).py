@@ -13,3 +13,19 @@ class Solution:
             return r * r
         else:
             return x * self.myPow(x, n - 1)
+
+    # TLE
+    def myPow(self, x: float, n: int) -> float:
+        if n == 0:
+            return 1
+
+        if n < 0:
+            x = 1 / x
+            n = -n
+        
+        curr = x
+        while n > 1:
+            curr = curr * x
+            n -= 1
+
+        return curr

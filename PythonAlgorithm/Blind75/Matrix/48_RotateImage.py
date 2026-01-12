@@ -1,11 +1,27 @@
 class Solution:
+    
+    # Cheating, 
+    # allocate another matrix, and copy back
     def rotate(self, matrix: List[List[int]]) -> None:
-        """
-        Do not return anything, modify matrix in-place instead.
-        """
+        n = len(matrix)
+        rotated = [[0] * n for _ in range(n)]
+
+        for i in range(n):
+            for j in range(n):
+                rotated[j][n - 1 - i] = matrix[i][j]
+
+        for i in range(n):
+            for j in range(n):
+                matrix[i][j] = rotated[i][j]
+                
+                
+    def rotate(self, matrix: List[List[int]]) -> None:
+        # l = 0 → left boundary of the current layer
+        # r = n - 1 → right boundary of the current layer
+        
         l, r = 0, len(matrix) - 1
         while l < r:
-            for i in range(r - l):
+            for i in range(r - l): # move 1 cell of the row at a time
                 top, bottom = l, r
 
                 # save the topleft
