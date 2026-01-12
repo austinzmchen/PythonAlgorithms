@@ -7,21 +7,18 @@ class Solution:
         
         # start from the shores and proceed if the curr height is higher or equal
         def recur(x, y, from_h, visited) -> str:
-            if x < 0 or y < 0:
-                return
-            if x >= len(heights) or y >= len(heights[x]):
-                return
-            if (x, y) in visited or heights[x][y] < from_h: 
+            if x < 0 or y < 0 or x >= len(heights) or y >= len(heights[x]):
                 return
             
-            visited.add((x,y))
             h = heights[x][y]
-            
-            recur(x-1, y, h, visited)
-            recur(x, y-1, h, visited)
-            recur(x+1, y, h, visited)
-            recur(x, y+1, h, visited)
-            return
+            if (x, y) in visited or h < from_h: 
+                return
+                        
+            visited.add((x,y))
+            recur(x - 1, y, h, visited)
+            recur(x, y - 1, h, visited)
+            recur(x + 1, y, h, visited)
+            recur(x, y + 1, h, visited)
         
         # going from left shore
         for row in range(len(heights)):

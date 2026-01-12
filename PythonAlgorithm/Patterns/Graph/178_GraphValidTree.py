@@ -38,7 +38,7 @@ class Solution:
     @param edges: a list of undirected edges
     @return: true if it's a valid tree, or false
     """
-    def valid_tree1(self, n: int, edges: List[List[int]]) -> bool:
+    def valid_tree(self, n: int, edges: List[List[int]]) -> bool:
         adj_dict = {i:[] for i in range(n)}
         
         for e in edges:
@@ -46,23 +46,19 @@ class Solution:
             adj_dict[e[1]].append(e[0])
         
         queue = [0]
-        visited = [False] * n
+        visited = set()
         
         while queue:
             node = queue.pop(0)
-            
-            if visited[node]:
-              return False
-            visited[node] = True
+            visited.add(node)
             
             for adj in adj_dict[node]:
-              if not visited[adj]:
+              if adj not in visited:
                 queue.append(adj)
 
-        for v in visited:
-            if not v:
+        for v in range(n):
+            if v not in visited:
                 return False
-
         return True
 
     
@@ -90,7 +86,7 @@ class Solution:
         visited = set()
         
         for i, v in in_degs.items():
-            if v == 1:
+            if v == 1: # leave node
                 queue.append(i)
         
         while queue:
@@ -98,7 +94,11 @@ class Solution:
             for _ in range(size):
                 node = queue.pop(0)
                 
+                if node in visited:
+                    return False
                 visited.add(node)
+                
+                # dec in_degs since un-directed graph
                 in_degs[node] -= 1
                 
                 for adj in adj_dict.get(node, []):

@@ -39,31 +39,59 @@
 
 class Solution323:
   
-  def countComponents(self, n: int, edges: list) -> int:
-    adj_dict = {i: [] for i in range(n)}
-    
-    for e in edges:
-      adj_dict[e[0]].append(e[1])
-      adj_dict[e[1]].append(e[0])
-      
-    count = 0
-    visited = set()
-    
-    def dfs(n):
-      if n in visited:
-        return
-      visited.add(n)
-      
-      for adj in adj_dict.get(n, []):
-        dfs(adj)
-    
-    for i in range(n):
-      if i not in visited:
-        count += 1
+    def countComponents(self, n: int, edges: list) -> int:
+        adj_dict = {i: [] for i in range(n)}
         
-      dfs(i)
-
-    return count
+        for e in edges:
+            adj_dict[e[0]].append(e[1])
+            adj_dict[e[1]].append(e[0])
+        
+        count = 0
+        visited = set()
+        
+        def dfs(n):
+            if n in visited:
+                return
+            visited.add(n)
+        
+        for adj in adj_dict.get(n, []):
+            dfs(adj)
+        
+        for i in range(n):
+            if i not in visited:
+                count += 1
+            
+        dfs(i)
+        return count
+  
+  
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        from collections import defaultdict, deque
+        # Build adjacency list
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+        
+        visited = set()
+        
+        def bfs(start):
+            queue = deque([start])
+            visited.add(start)
+            while queue:
+                node = queue.popleft()
+                for neighbor in graph[node]:
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.append(neighbor)
+        
+        res = 0
+        for node in range(n):
+            if node not in visited:
+                bfs(node)
+                res += 1
+        
+        return res
   
   
 edges1 = [[0,1], [1,2], [3,4]]
