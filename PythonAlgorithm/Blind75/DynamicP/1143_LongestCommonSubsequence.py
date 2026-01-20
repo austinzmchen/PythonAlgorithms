@@ -6,8 +6,8 @@ class Solution:
               return 0
             
             if text1[i1] == text2[i2]:
-              return 1 + recur(i1+1, i2+1)
+              return 1 + recur(i1 + 1, i2 + 1)
             
-            return max(recur(i1+1, i2), recur(i1, i2+1))
+            return max(recur(i1 + 1, i2), recur(i1, i2 + 1))
 
         return recur(0, 0)

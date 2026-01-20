@@ -7,7 +7,8 @@ class Solution:
         def recur(i):
             if i >= len(cost):
                 return 0
-            return min(cost[i] + recur(i + 1), cost[i] + recur(i + 2))
+            return min(cost[i] + recur(i + 1), 
+                       cost[i] + recur(i + 2))
 
         return min(recur(0), recur(1))
         

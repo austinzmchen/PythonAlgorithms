@@ -3,18 +3,18 @@ class Solution:
         visited = set()
 
         while True:
-            curr = 0
+            v = 0
             while n:
                 d = n % 10
                 n = n // 10
-                curr += d * d
+                v += d * d
 
-            if curr == 1:
+            if v == 1:
                 return True
-            if curr in visited:
+            if v in visited:
                 return False
             
-            n = curr
+            n = v
             visited.add(n)
 
         return False

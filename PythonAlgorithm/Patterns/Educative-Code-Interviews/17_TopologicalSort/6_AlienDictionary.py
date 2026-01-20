@@ -52,7 +52,6 @@
 from collections import deque
 
 def find_order(words):
-  sorted_order = []
   adj_dict: dict[str, list] = {}
   in_degrees: dict[str, int] = {}
 
@@ -79,11 +78,13 @@ def find_order(words):
     if value == 0:
       queue.append(key)
 
+  res = []
+  
   while queue:
     size = len(queue)
     for _ in range(size):
       vert = queue.popleft()
-      sorted_order.append(vert)
+      res.append(vert)
 
       for adj in adj_dict.get(vert, []):
         if adj in in_degrees:
@@ -91,7 +92,7 @@ def find_order(words):
           if in_degrees[adj] == 0:
             queue.append(adj)
 
-  return "".join(sorted_order)
+  return "".join(res)
 
 
 def main():

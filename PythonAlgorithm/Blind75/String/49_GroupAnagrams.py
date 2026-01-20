@@ -15,9 +15,11 @@ class Solution:
             
     def groupAnagrams2(self, strs: List[str]) -> List[List[str]]:
         _dict = {}
-
         for s in strs:
-            ss = "".join(sorted(s))
-            _dict.setdefault(ss, []).append(s)
+            key = "".join(sorted(s))
+            _dict.setdefault(key, []).append(s)
         
-        return [list(v) for v in _dict.values()]     
+        return list(_dict.values())
+
+
+print(Solution().groupAnagrams2(strs = ["eat","tea","tan","ate","nat","bat"]))

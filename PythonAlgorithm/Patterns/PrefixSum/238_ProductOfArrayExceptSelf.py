@@ -16,3 +16,9 @@ class Solution:
         for i in range(len(nums)):
             res.append(prefix[i] * postfix[i])
         return res
+
+
+#       [ 1, 2, 3, 4]
+# left: [ 1, 1, 2, 6]
+# right:[24,12, 4, 1]
+# res:  [12,12, 8, 6]

@@ -10,9 +10,9 @@ class Solution543:
             right = recur(node.right)
 
             nonlocal res
-            res = max(res, left + right + 1)
+            res = max(res, left + right)
 
             return max(left, right) + 1
 
         recur(root)
-        return res - 1
+        return res

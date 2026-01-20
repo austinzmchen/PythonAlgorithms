@@ -30,6 +30,30 @@ Cons:
 - Not effective for storing and querying unstructured data
 - Relational databases do not handle long tail of data well - when indexes grow large, random access is expensive
 
+### CAP Theorem
+
+- Partition Tolerence
+  - If you can't handle partitions, your system goes down when (not if) network issues occur
+  - The only true "CA" system is a single-node database—no network, no partitions possible
+
+### PACELC
+
+```
+CAP says: "During partition, choose A or C"
+PACELC says: "During partition, choose A or C; 
+              during normal operation, choose L or C"
+```
+
+- EL: Prioritize Low Latency over Consistency
+  - Replicate asynchronously
+  - Reads might see slightly stale data
+  - Fast responses
+
+
+- EC: Prioritize Consistency over Latency
+  - Replicate synchronously
+  - Wait for acknowledgments from multiple nodes
+  - Slower responses but guaranteed consistency
 
 ### ACID
 
@@ -40,6 +64,11 @@ Cons:
   
 - Relational database, mongoDb, redis transaction, Apache Kafka (You can write to multiple topics atomically)
 
+### BASE:
+
+- Basically Available: System appears to work most of the time (tolerates partial failures)
+- Soft State: Data state may change over time without new input (due to eventual consistency)
+- Eventual Consistency: Given enough time with no updates, all replicas will converge to the same value
 
 ### NoSQL:
 

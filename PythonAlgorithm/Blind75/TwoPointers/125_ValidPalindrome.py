@@ -11,7 +11,6 @@ class Solution:
                 continue
             
             if s[l].lower() != s[r].lower():
-                print(f"{s[l]=}, {l=}, {s[r]=}, {r=}")
                 return False
             
             l += 1

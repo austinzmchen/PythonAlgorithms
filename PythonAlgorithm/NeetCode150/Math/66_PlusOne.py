@@ -17,3 +17,24 @@ class Solution:
             digits.insert(0, 1)
         
         return digits
+    
+    
+    def plusOne(self, digits: List[int]) -> List[int]:
+        i = len(digits) - 1
+        carry = 1
+        res = []
+        
+        while i >= 0:
+            n = digits[i]
+            n += carry
+            
+            carry = n // 10
+            n = n % 10
+            
+            res.insert(0, n)
+            i -= 1
+
+        if i < 0 and carry == 1:
+            res.insert(0, 1)
+        
+        return res

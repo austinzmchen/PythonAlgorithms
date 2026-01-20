@@ -1,15 +1,10 @@
-from typing import List
-
 
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         adj_dict = {}
-
-        for f in flights:
-            a, b, cost = f
-
-            adj_dict.setdefault(a, [])
-            adj_dict[a].append((b, cost))
+        for frm, to, cost in flights:
+            adj_dict.setdefault(frm, [])
+            adj_dict[frm].append((to, cost))
         
         import sys
         from functools import lru_cache
@@ -22,9 +17,7 @@ class Solution:
                 return curr_cost
             
             min_cost = sys.maxsize
-            for t in adj_dict.get(num, []):
-                to, cost = t
-                # print(f"{to=}, {cost=}")
+            for to, cost in adj_dict.get(num, []):
                 min_cost = min(min_cost, recur(to, stops - 1, cost + curr_cost))
             
             return min_cost

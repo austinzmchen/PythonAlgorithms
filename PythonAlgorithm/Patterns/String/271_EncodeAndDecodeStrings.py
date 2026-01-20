@@ -56,27 +56,25 @@ class Solution:
     @return: dcodes a single string to a list of strings
     """
     def decode(self, str):
-        # write your code here
-        i = 0
         res = []
-
+        
+        i = 0
         while i < len(str):
           j = i
           while j < len(str) and str[j] != ':':
             j += 1
             
           size = int(str[i:j])
-          i = j + 1
-          
+          i = j + 1  
           encoded_str = str[i: i + size]
-          res.append(encoded_str)
           
+          res.append(encoded_str)
           i += size
 
         return res
       
   
 sol = Solution()
-print(sol.decode(sol.encode(["Hello", "World"])))
+print(sol.decode(sol.encode(["Hello", "World"])))  # encoded: "5:Hello5World"
 print(sol.decode(sol.encode(["a:b", "c#d", "e,f"])))
 print(sol.decode(sol.encode(["", "a", "", "b"])))

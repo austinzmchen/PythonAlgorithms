@@ -10,8 +10,5 @@ class Solution:
                 new_ls.append(n)
                 res.append(new_ls)
         
-        _set = set()
-        for ls in res:
-            _set.add(tuple(ls))
-        
+        _set = {tuple(ls) for ls in res}
         return [list(t) for t in _set]
