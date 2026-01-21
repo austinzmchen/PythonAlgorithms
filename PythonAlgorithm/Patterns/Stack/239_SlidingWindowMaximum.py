@@ -4,7 +4,7 @@ from collections import deque
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         deq = deque()
-        results = []
+        res = []
         
         for i, n in enumerate(nums):
             # pop indexes less than the window
@@ -18,9 +18,9 @@ class Solution:
 
             if i >= k - 1:
                 # max n at left
-                results.append(deq[0][0])
+                res.append(deq[0][0])
 
-        return results
+        return res
     
     
     # TLE
@@ -43,3 +43,4 @@ class Solution:
     
     
 print(Solution().maxSlidingWindow(nums = [1,3,-1,-3,5,3,6,7], k = 3))
+print(Solution().maxSlidingWindow(nums = [1,0,-1,-3,5,3,6,7], k = 3))

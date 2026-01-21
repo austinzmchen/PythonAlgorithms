@@ -21,8 +21,10 @@ class Solution:
     
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         from collections import Counter
-
+        from heapq import heappush, heappop
+        
         min_heap = []
+        
         for n, f in Counter(nums).items():
             if len(min_heap) < k:
                 heappush(min_heap, (f, n))

@@ -2,15 +2,12 @@
 class Solution76:
     def minWindow(self, s: str, t: str) -> str:
         import sys
-        _dict = {}
-        count = 0
-        _min = sys.maxsize
-        i_min = -1
-
-        for c in t:
-            if _dict.get(c, 0) == 0:
-                count += 1
-            _dict[c] = _dict.get(c, 0) + 1
+        from collections import Counter
+        _dict = Counter(t)
+        count = len(_dict)
+        
+        curr_min = sys.maxsize
+        res = ""
 
         l = 0
         for r, c in enumerate(s):
@@ -22,20 +19,16 @@ class Solution76:
             while count == 0 and l <= r:
                 lc = s[l]
                 if lc in _dict:
-                    if _dict[lc] == 0:
-                        count += 1
                     _dict[lc] += 1
+                    if _dict[lc] == 1:
+                        count += 1
 
-                if r - l + 1 < _min:
-                    _min = r - l + 1
-                    i_min = l
+                if r - l + 1 < curr_min:
+                    curr_min = r - l + 1
+                    res = s[l: l + curr_min]
 
                 l += 1
-
-        if i_min == -1:
-            return ""
-        else:
-            return s[i_min: i_min + _min]
+        return res
         
         
     # two pointers, sliding window
@@ -70,6 +63,6 @@ class Solution76:
         return res
     
 
-# print(Solution76().minWindow("ADOBECODEBANC", "ABC"))
-# print(Solution76().minWindow('a', 'aa'))
+print(Solution76().minWindow("ADOBECODEBANC", "ABC"))
+print(Solution76().minWindow('a', 'aa'))
 print(Solution76().minWindow('a', 'a'))
