@@ -31,10 +31,11 @@ class Solution:
         while min_heap:
             val, i, node = heappop(min_heap)
             curr.next = ListNode(val)
+            curr = curr.next
             
             if node := node.next:
                 heappush(min_heap, (node.val, i, node))
-            curr = curr.next
+            
         return dummy.next
       
       

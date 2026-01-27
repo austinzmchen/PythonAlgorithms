@@ -17,18 +17,18 @@ class Solution:
         # reverse second half of the list
         head2 = reverse(mid)
         
-        curr, curr2 = head, head2
-        while curr is not mid:
-            next = curr.next
-            next2 = curr2.next
+        l1, l2 = head, head2
+        while l1 is not mid: # incorrect: l1 is not l2:
+            next = l1.next
+            next2 = l2.next
             
-            curr.next = curr2
-            curr2.next = next
+            l1.next = l2
+            l2.next = next
             
-            curr = next
-            curr2 = next2
+            l1 = next
+            l2 = next2
             
-        curr.next = None
+        l1.next = None
         return head
 
 

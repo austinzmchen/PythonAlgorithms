@@ -29,4 +29,35 @@ class Solution:
             curr = curr.next
 
         return dummy_head.next
-        
+    
+    
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        carry = 0
+        dummy = ListNode(0)
+        curr = dummy
+
+        while l1 or l2:
+            sum = 0
+            if l1 and l2:
+                sum = (l1.val + l2.val + carry)
+                l1 = l1.next
+                l2 = l2.next
+
+            elif l1:
+                sum = l1.val + carry
+                l1 = l1.next
+
+            elif l2:
+                sum = l2.val + carry
+                l2 = l2.next
+
+            v = sum % 10
+            carry = sum // 10
+            curr.next = ListNode(v)
+            curr = curr.next
+
+        if carry:
+            curr.next = ListNode(carry)
+            curr = curr.next
+
+        return dummy.next

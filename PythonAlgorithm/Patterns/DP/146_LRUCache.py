@@ -18,13 +18,12 @@ class LRUCache:
             self._dict.pop(key)
             self._dict[key] = value
             return
-
-        if len(self._dict) < self.cap:
-            self._dict[key] = value
-        else:
+        
+        if len(self._dict) == self.cap:
             k = next(iter(self._dict.keys()))
             self._dict.pop(k)
-            self._dict[key] = value
+
+        self._dict[key] = value
             
 
 class LRUCache2:

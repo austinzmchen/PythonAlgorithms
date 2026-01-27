@@ -7,7 +7,6 @@ class Solution:
             if nums[mid] == target:
                 return mid
 
-            print(f"{l=}, {r=}")
             if nums[l] <= nums[mid]:
                 # left is sorted
                 if nums[l] <= target < nums[mid]:

@@ -18,24 +18,26 @@ class Solution42:
     # two pointers
     def trap(self, height: List[int]) -> int:
         l, r = 0, len(height) - 1
-        min_l, min_r = 0, 0
+        max_l, max_r = 0, 0
         res = 0
 
         while l <= r:
-            min_l = max(min_l, height[l])
-            min_r = max(min_r, height[r])
+            max_l = max(max_l, height[l])
+            max_r = max(max_r, height[r])
             
             if height[l] < height[r]:
-                if min_l > height[l]:
-                    res += min_l - height[l]
+                if max_l > height[l]:
+                    res += max_l - height[l]
 
                 l += 1
+                
             else:
-                if height[r] < min_r:
-                    res += min_r - height[r]
+                if height[r] < max_r:
+                    res += max_r - height[r]
 
                 r -= 1
+                
         return res
     
-    
+
 print(Solution42().trap([0,1,0,2,1,0,1,3,2,1,2,1]))

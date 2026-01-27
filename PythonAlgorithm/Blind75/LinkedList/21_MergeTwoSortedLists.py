@@ -1,10 +1,9 @@
-import sys
-from typing import Optional
+
 from LinkedList.ListNode import ListNode
 
 class Solution21:
     def mergeTwoLists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        dummyHead = ListNode(-sys.maxsize - 1)
+        dummyHead = ListNode(0)
         curr = dummyHead
         
         while l1 or l2:

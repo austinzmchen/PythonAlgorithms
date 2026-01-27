@@ -25,9 +25,9 @@ class Solution:
                 l, r = new_end, new_end
                 i = 0
 
-            i += 1
             r = r.next
-
+            i += 1
+            
         return dummy.next
 
 

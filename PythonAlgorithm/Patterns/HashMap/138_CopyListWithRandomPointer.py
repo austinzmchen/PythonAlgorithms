@@ -34,26 +34,25 @@ class Solution138:
     
     # use Node as dict key
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        dummy = Node(0)
+        if not head: 
+            return None
         _dict = {}
 
-        curr2 = head
-        while curr2:
-            _dict[curr2] = Node(curr2.val)
-            curr2 = curr2.next
+        curr = head
+        while curr:
+            _dict[curr] = Node(curr.val)
+            curr = curr.next
 
-        curr2 = head
-        while curr2:
-            curr = _dict[curr2]
-            if dummy.next is None:
-                dummy.next = curr
+        curr = head
+        while curr:
+            nn = _dict[curr]
 
-            if curr2.next:
-                curr.next = _dict[curr2.next]
+            if curr.next:
+                nn.next = _dict[curr.next]
 
-            if curr2.random:
-                curr.random = _dict[curr2.random]
+            if curr.random:
+                nn.random = _dict[curr.random]
 
-            curr2 = curr2.next
+            curr = curr.next
 
-        return dummy.next
+        return _dict[head]

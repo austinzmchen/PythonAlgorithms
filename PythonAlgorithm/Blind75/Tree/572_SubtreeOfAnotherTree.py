@@ -18,8 +18,10 @@ class Solution:
         def recur(node):
             if not node:
                 return not subRoot
-        
-            return same(node, subRoot) or \
+            
+            is_same = same(node, subRoot)
+            
+            return  is_same or \
                     recur(node.left, subRoot) or \
                     recur(node.right, subRoot)
         

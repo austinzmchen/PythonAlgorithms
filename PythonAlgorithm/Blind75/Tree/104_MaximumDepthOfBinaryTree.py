@@ -16,3 +16,14 @@ class Solution:
 
         return recur(root, 0)
     
+    
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        def recur(node):
+            if not node:
+                return 0
+            
+            return max(recur(node.left),
+                       recur(node.right)) + 1
+
+        return recur(root, 0)
+    
