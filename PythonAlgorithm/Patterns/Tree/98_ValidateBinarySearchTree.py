@@ -19,6 +19,7 @@ class Solution:
             else:
                 return False
 
-            return recur(node.left, low, node.val) and recur(node.right, node.val, high)
+            return recur(node.left, low, node.val) and \
+                    recur(node.right, node.val, high)
 
         return recur(root, -sys.maxsize-1, sys.maxsize)

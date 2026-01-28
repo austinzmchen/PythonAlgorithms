@@ -18,7 +18,9 @@ class Solution:
                        left + node.val,
                        right + node.val)
 
-            return max(node.val, left + node.val, right + node.val)
+            return max(node.val, 
+                       left + node.val, 
+                       right + node.val)
 
         recur(root)
         return res
