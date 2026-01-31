@@ -68,21 +68,23 @@ class Solution323:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
         from collections import defaultdict, deque
         # Build adjacency list
-        graph = defaultdict(list)
-        for u, v in edges:
-            graph[u].append(v)
-            graph[v].append(u)
+        adj_dict = defaultdict(list)
+        
+        for a, b in edges:
+            adj_dict[a].append(b)
+            adj_dict[b].append(a)
         
         visited = set()
         
         def bfs(start):
             queue = deque([start])
-            visited.add(start)
+            
             while queue:
                 node = queue.popleft()
-                for neighbor in graph[node]:
+                visited.add(node)
+                
+                for neighbor in adj_dict[node]:
                     if neighbor not in visited:
-                        visited.add(neighbor)
                         queue.append(neighbor)
         
         res = 0

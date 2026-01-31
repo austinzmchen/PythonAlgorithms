@@ -15,7 +15,6 @@ class Solution:
 
         if not fresh_count:
             return 0
-        minute = 0
 
         def recur(r, c):
             if r < 0 or c < 0 or r >= len(grid) or c >= len(grid[r]):
@@ -27,8 +26,8 @@ class Solution:
             rotten_q.append((r, c))
             grid[r][c] = 2
             fresh_count -= 1
-            return
 
+        minute = 0
         while rotten_q:
             size = len(rotten_q)
             for _ in range(size):
