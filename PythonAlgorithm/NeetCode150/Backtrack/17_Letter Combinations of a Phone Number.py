@@ -5,6 +5,7 @@ class Solution:
         
         res = []
         digit2char = {
+            "1": "",
             "2": "abc",
             "3": "def",
             "4": "ghi",
@@ -15,13 +16,13 @@ class Solution:
             "9": "wxyz",
         }
 
-        def recur(i, curr):
-            if len(curr) == len(digits):
-                res.append(curr)
+        def recur(i, path):
+            if len(path) == len(digits):
+                res.append(path)
                 return
             
             for c in digit2char[digits[i]]:
-                recur(i + 1, curr + c)
+                recur(i + 1, path + c)
 
         recur(0, "")
         return res

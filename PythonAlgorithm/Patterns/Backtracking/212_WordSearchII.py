@@ -64,7 +64,7 @@ print(r2)
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         words = set(words)
-        res = set()
+        res = set() # for case of words ["oa", "oaa"]
 
         def recur(x, y, path):
             if x < 0 or x >= len(board) or y < 0 or y >= len(board[x]):
@@ -75,8 +75,7 @@ class Solution:
             
             path += cell
             if path in words:
-                if path not in res: # for case of words ["oa", "oaa"]
-                    res.add(path)
+                res.add(path)
 
             board[x][y] = "#"
             recur(x + 1, y, path)

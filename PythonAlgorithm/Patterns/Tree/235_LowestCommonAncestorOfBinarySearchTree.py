@@ -18,14 +18,19 @@ class Solution:
             r = recur(node.right)
             
             nonlocal res
-            found_both = (l and r) or \
-                         ((l or r) and node.val in [p.val, q.val])
             
-            if found_both:
+            if l and r:
                 if not res:
                     res = node
+                return True
             
-            return l or r or node.val in [p.val, q.val]
+            elif l or r:
+                if node.val in [p.val, q.val]:
+                    if not res:
+                        res = node
+                return True
+            
+            return node.val in [p.val, q.val]
         
         recur(root)
         return res

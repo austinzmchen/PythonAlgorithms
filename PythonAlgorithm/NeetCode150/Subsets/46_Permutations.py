@@ -7,10 +7,10 @@ class Solution:
             size = len(perms)
             for p in range(size):
                 for i in range(len(perms[p]) + 1):
-                    new_perm = list(perms[p])
-                    new_perm.insert(i, n)
-                    perms.append(new_perm)
+                    ls = list(perms[p])
+                    ls.insert(i, n)
+                    perms.append(ls)
 
-                    if len(new_perm) == len(nums):
-                        res.append(new_perm)
+                    if len(ls) == len(nums):
+                        res.append(ls)
         return res

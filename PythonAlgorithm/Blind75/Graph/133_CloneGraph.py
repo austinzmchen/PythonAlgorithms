@@ -1,5 +1,3 @@
-from collections import deque
-from typing import Optional
 
 class Node:
     def __init__(self, val = 0, neighbors = None):
@@ -36,27 +34,6 @@ class Solution:
                     visited.add(nb)
 
         return _map[node]
-      
-      
-    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        node_dict = {}
-
-        def recur(new_node):
-            if not new_node:
-                return None
-            if n := node_dict.get(new_node.val):
-                return n
-            
-            new_node = Node(new_node.val, [])
-            node_dict[new_node.val] = new_node
-
-            for nb in node.neighbors:
-                new_nb = recur(nb)
-                new_node.neighbors.append(new_nb)
-
-            return new_node
-        
-        return recur(node)
     
     
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
@@ -85,6 +62,27 @@ class Solution:
                 node_dict[v].neighbors.append(nb)
 
         return node_dict[node.val]
+    
+    
+    def cloneGraph(self, root: Optional['Node']) -> Optional['Node']:
+        node_dict = {}
+
+        def recur(node):
+            if not node:
+                return None
+            if n := node_dict.get(node.val):
+                return n
+            
+            new_node = Node(node.val, [])
+            node_dict[node.val] = new_node
+
+            for nb in node.neighbors:
+                new_nb = recur(nb)
+                new_node.neighbors.append(new_nb)
+
+            return new_node
+        
+        return recur(root)
     
     
 node1 = Node(1)

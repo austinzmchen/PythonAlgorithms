@@ -25,6 +25,7 @@ class Solution:
             for j in range(i, len(s)):
                 if is_pal(i, j):
                     ss = s[i:j+1]
+                    # only move on to the next char if pal found,
                     recur(j + 1, path + [ss])
             
         recur(0, [])
