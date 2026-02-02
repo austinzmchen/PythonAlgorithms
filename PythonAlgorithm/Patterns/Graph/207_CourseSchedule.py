@@ -1,5 +1,3 @@
-from typing import List
-
 
 class Solution:
     def canFinish1(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
@@ -8,17 +6,13 @@ class Solution:
         for i in range(numCourses):
             adj_dict[i] = []
             in_degrees[i] = 0
-            
+
         for req in prerequisites:
             curr, pre = req
             adj_dict[pre].append(curr)
             in_degrees[curr] += 1
         
-        queue = []
-        for i, v in in_degrees.items():
-            if v == 0:
-                queue.append(i)
-        
+        queue = [i for i, v in in_degrees.items() if v == 0]
         if not queue:
             return False
         

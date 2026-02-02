@@ -16,7 +16,7 @@ class Solution:
                 deq.pop()
             deq.append((n, i))
 
-            if i >= k - 1:
+            if i - k + 1 >= 0:
                 # max n at left
                 res.append(deq[0][0])
 

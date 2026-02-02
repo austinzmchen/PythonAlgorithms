@@ -22,18 +22,18 @@ class Solution:
         
         # going from left shore
         for row in range(len(heights)):
-            recur(row, 0, heights[row][0], pac)
+            recur(row, 0, 0, pac)
         # going from top shore
         for col in range(len(heights[0])):
-            recur(0, col, heights[0][col], pac)
+            recur(0, col, 0, pac)
         # going from right shore
         for row in range(len(heights)):
-            recur(row, len(heights[0])-1, heights[row][-1], atl)
+            recur(row, len(heights[row])-1, 0, atl)
         # going from bottom shore
         for col in range(len(heights[0])):
-            recur(len(heights)-1, col, heights[-1][col], atl)
+            recur(len(heights)-1, col, 0, atl)
         
-        return pac & atl
+        return list(pac & atl)
       
       
     # TLE

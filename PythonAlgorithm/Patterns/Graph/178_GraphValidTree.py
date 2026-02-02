@@ -66,49 +66,35 @@ class Solution:
     def valid_tree(self, n: int, edges: List[List[int]]) -> bool:
         in_degs = {}
         adj_dict = {}
-        
         for i in range(n):
             in_degs[i] = 0
+            adj_dict[i] = []
             
         for e in edges:
             n1, n2 = e
             
             in_degs[n1] = in_degs.get(n1, 0) + 1
             in_degs[n2] = in_degs.get(n2, 0) + 1
-            
-            adj_dict.setdefault(n1, [])
             adj_dict[n1].append(n2)
-            
-            adj_dict.setdefault(n2, [])
             adj_dict[n2].append(n1)
         
-        queue = []
         visited = set()
-        
-        for i, v in in_degs.items():
-            if v == 1: # leave node
-                queue.append(i)
+        queue = [i for i, v in in_degs.items() if v == 1]
         
         while queue:
-            size = len(queue)
-            for _ in range(size):
-                node = queue.pop(0)
-                
-                if node in visited:
-                    return False
-                visited.add(node)
-                
-                # dec in_degs since un-directed graph
-                in_degs[node] -= 1
-                
-                for adj in adj_dict.get(node, []):
-                    in_degs[adj] -= 1
-                    if in_degs.get(adj) == 1:
-                        queue.append(adj)
+            node = queue.pop(0)
+            visited.add(node)
+            # dec in_degs since un-directed graph
+            in_degs[node] -= 1
+            
+            for adj in adj_dict.get(node, []):
+                in_degs[adj] -= 1
+                if in_degs.get(adj) == 1:
+                    queue.append(adj)
 
         return len(visited) == n
 
 
 print(Solution().valid_tree(5, [[0,1],[0,2],[0,3],[1,4]]))
 print(Solution().valid_tree(5, [[0,1],[1,2],[2,3],[1,3],[1,4]]))
-print(Solution().valid_tree(5, [[0,1],[0,2]]))
+print(Solution().valid_tree(3, [[0,1],[0,2]]))
