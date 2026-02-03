@@ -32,3 +32,21 @@ class Solution:
         
         recur(0, 0, "")
         return res
+    
+    
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def recur(open, close, path):
+            if open == n and close == n:
+                res.append(path)
+                return
+            if open > n or close > n:
+                return
+            
+            recur(open + 1, close, path + "(")
+            if open > close:
+                recur(open, close + 1, path + ")")
+        
+        recur(0, 0, "")
+        return res

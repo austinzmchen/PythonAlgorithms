@@ -23,11 +23,9 @@ class Solution:
             adj_dict[to].append(frm)
 
         # if you use the in_degs, you don't need a visited set to track
-        q = deque()
-        
-        for i in range(1, n + 1): # value start from 1
-            if in_degs[i] == 1:
-                q.append(i)
+        # value start from 1
+        q = deque([i for i in range(1, n + 1) 
+                   if in_degs[i] == 1])
 
         while q:
             node = q.popleft()
@@ -37,7 +35,7 @@ class Solution:
                 in_degs[nb] -= 1
                 if in_degs[nb] == 1:
                     q.append(nb)
-
+        
         for frm, to in reversed(edges):
             if in_degs[frm] == 2 and in_degs[to] == 2:
                 return [frm, to]

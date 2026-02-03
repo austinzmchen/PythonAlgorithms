@@ -35,3 +35,33 @@ class Solution:
                     queue.append((destination, new_used, new_path))
         
         return []  # Should not reach here for valid input
+    
+    
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        tickets.sort()
+        
+        adj_dict = {}
+        for src, dst in tickets:
+            adj_dict.setdefault(src, []).append(dst)
+
+        res = ["JFK"]
+        def dfs(src, path):
+            if len(path) == len(tickets) + 1:
+                return True
+            if src not in adj_dict:
+                return False
+
+            for i, dest in enumerate(adj_dict[src]):
+                # remove dest so it can be used again from src
+                adj_dict[src].pop(i)
+                res.append(dest)
+                # try go with this dest
+                if dfs(dest): 
+                    return True
+                # backtrack
+                adj_dict[src].insert(i, dest)
+                res.pop()
+            return False
+
+        dfs("JFK")
+        return res

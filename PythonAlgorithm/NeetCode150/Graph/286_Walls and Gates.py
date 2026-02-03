@@ -10,36 +10,8 @@
 # Assume the grid can only be traversed up, down, left, or right.
 # Modify the grid in-place.
 
-# Example 1:
-
-# Input: [
-#   [i,-1,0, i],
-#   [i, i,i,-1],
-#   [i,-1,i,-1],
-#   [0,-1,i, i]
-# ]
-
-# Output: [
-#   [3,-1,0,1],
-#   [2,2,1,-1],
-#   [1,-1,2,-1],
-#   [0,-1,3,4]
-# ]
-
-# Example 2:
-
-# Input: [
-#   [0,-1],
-#   [i, i]
-# ]
-
-# Output: [
-#   [0,-1],
-#   [1, 2]
-# ]
-
 class Solution:
-    def islandsAndTreasure(self, grid: List[List[int]]) -> None:
+    def walls_and_gates(self, grid: List[List[int]]) -> None:
         from collections import deque
         queue = deque()
         visited = set() # use set since i can not set value in grid
@@ -49,7 +21,7 @@ class Solution:
                 if cell == 0:
                     queue.append((r, c))
 
-        def recur(r, c):
+        def bfs(r, c):
             if r < 0 or c < 0 or r >= len(grid) or c >= len(grid[r]):
                 return
             if grid[r][c] <= 0:
@@ -66,10 +38,11 @@ class Solution:
             for _ in range(size):
                 r, c = queue.popleft()
                 grid[r][c] = dist
-                recur(r - 1, c)
-                recur(r + 1, c)
-                recur(r, c + 1)
-                recur(r, c - 1)
+                
+                bfs(r - 1, c)
+                bfs(r + 1, c)
+                bfs(r, c + 1)
+                bfs(r, c - 1)
                 
             dist += 1
         return
@@ -81,8 +54,17 @@ input = [
   [2147483647,-1,2147483647,-1],
   [0,-1,2147483647,2147483647]
 ]
-Solution().islandsAndTreasure(input)
+Solution().walls_and_gates(input)
 
 for ls in input:
     print(ls)
 
+
+input2 = [
+  [0,-1],
+  [2147483647,2147483647],
+]
+Solution().walls_and_gates(input2)
+
+for ls in input2:
+    print(ls)
